@@ -77,11 +77,11 @@ public class PlayerObject : MonoBehaviour
             playerScoreText = gameObject.GetComponent<Text>();
 
         // camera settings
-        if (camera.target != gameObject)
-        {
-            camera.target = gameObject;
-            camera.distance = camPosOffset;
-        }
+        // if (camera.target != null)
+        // {
+        //     camera.target = gameObject;
+        //     camera.distance = camPosOffset;
+        // }
 
         // gets values to be reset upon spawning
         spawnPos = transform.position;
@@ -170,7 +170,7 @@ public class PlayerObject : MonoBehaviour
         {
             // TODO: factor in deltaTime for movement
             // TODO: lerp camera for rotation
-            
+
             // Movement
             {
                 // forward and backward movement
@@ -211,7 +211,7 @@ public class PlayerObject : MonoBehaviour
 
 
                     // if there is no velocity, set the player's rotation to -90 degrees.
-                    if(Input.GetKey(KeyCode.W)) // if the player is going foward
+                    if (Input.GetKey(KeyCode.W)) // if the player is going foward
                     {
                         Vector3 force = -transform.right * movementSpeed * speedMult;
                         rigidBody.AddForce(force);
@@ -266,12 +266,12 @@ public class PlayerObject : MonoBehaviour
             // Hard Rotation (Snap)
             {
                 // rotate to the left (slow)
-                if(Input.GetKey(KeyCode.LeftArrow))
+                if (Input.GetKey(KeyCode.LeftArrow))
                 {
                     transform.Rotate(Vector3.up, -rotSpeed.y * Time.deltaTime);
                 }
                 // rotate to the right
-                else if(Input.GetKey(KeyCode.RightArrow))
+                else if (Input.GetKey(KeyCode.RightArrow))
                 {
                     transform.Rotate(Vector3.up, +rotSpeed.y * Time.deltaTime);
                 }
@@ -326,7 +326,7 @@ public class PlayerObject : MonoBehaviour
                 // }
 
                 // turn backwards
-                if(Input.GetKeyDown(KeyCode.DownArrow))
+                if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
                     transform.Rotate(Vector3.up, 180.0F);
                 }
@@ -335,11 +335,11 @@ public class PlayerObject : MonoBehaviour
             // jump
             {
                 // TODO: check to see if this effects slopes.
-                if((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space)) && rigidBody.velocity.y == 0.0F)
+                if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space)) && rigidBody.velocity.y == 0.0F)
                 {
                     // transform.position = new Vector3(transform.position.x, transform.position.y + 0.1F, transform.position.z);
                     // rigidBody.AddExplosionForce(jumpForce * 1000.0f, transform.position, 1.0F);
-                    rigidBody.AddForce(Vector3.up * jumpForce * Time.deltaTime);
+                    rigidBody.AddForce(Vector3.up * jumpForce * jumpMult * Time.deltaTime);
                     // rigidBody.AddForce(Vector3.up * jumpForce);
 
                 }
@@ -371,7 +371,7 @@ public class PlayerObject : MonoBehaviour
                 // float revForce = rigidBody.velocity.magnitude - maxVelocity;
                 // rigidBody.AddForce(rigidBody.velocity.normalized * -1 * revForce);
             }
-           
+
         }
         else
         {
@@ -440,13 +440,13 @@ public class PlayerObject : MonoBehaviour
 
         // TODO: take this out or make it more efficient.
         // player isn't moving
-        if(stateMachine.state != 0 && rigidBody.velocity == new Vector3())
+        if (stateMachine.state != 0 && rigidBody.velocity == new Vector3())
         {
             stateMachine.SetState(0);
         }
 
         // entered death space
-        if(deathSpace.InDeathSpace(transform.position)) 
+        if (deathSpace.InDeathSpace(transform.position))
         {
             // takes away the flag
             if (flag != null)
@@ -465,7 +465,7 @@ public class PlayerObject : MonoBehaviour
         }
 
         // if the player has a flag, gain a point.
-        if(flag != null)
+        if (flag != null)
         {
             playerScore += Time.deltaTime;
             playerScoreText.text = "Player Score: " + Mathf.Floor(playerScore);
