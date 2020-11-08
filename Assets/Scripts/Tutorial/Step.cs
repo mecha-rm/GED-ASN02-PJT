@@ -7,8 +7,8 @@ public abstract class Step : MonoBehaviour
 {
     private Checklist todoList = null;
     // the number of the step in the list. Step numbers start at 1.
-    string name = "";
-    string desc = "";
+    public string name = "";
+    public string description = "";
 
     // Start is called before the first frame update
     void Start()

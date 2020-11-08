@@ -16,15 +16,21 @@ public class PlayerObject : MonoBehaviour
     public float playerScore = 0.0F;
     public Text playerScoreText = null; // TODO: maybe make a dedicated script to handle this.
 
+    // the jump cycle - these are meant to fix the jump.
+    // this is currently unused, but might be implemented later.
+    private bool onGround = false;
+    // values less than or equal to this value count as a slope the player can jump off of.
+    private const float SLOPE_DOT = 0.55F;
+
     // the rigidbody for the player.
     private Rigidbody rigidBody; // maybe make this private since the start() function gets it?
-    public float movementSpeed = 12.0F;
-    public float jumpForce = 20000.0F;
+    public float movementSpeed = 2500.0F;
+    public float jumpForce = 10.0F;
     public float backupFactor = 0.5F;
     public bool momentumMovement = false;
 
     // camera controls
-    public FollowerCamera camera; // the player's camera
+    public FollowerCamera playerCamera; // the player's camera (TODO: generate a dedicated camera for the player)
     public Vector3 camPosOffset = new Vector3(0, 3, -7); // the offset for the camera that's attached to the player.
 
     private Vector3 direcVec; // the vector direction
@@ -88,6 +94,54 @@ public class PlayerObject : MonoBehaviour
         spawnRot = transform.rotation;
         spawnScl = transform.localScale;
     }
+
+    // called when the player collides with something.
+    private void OnCollisionEnter(Collision collision)
+    {
+        onGround = true;
+    }
+
+    // called when colliding
+    // checks every frame
+    private void OnCollisionStay(Collision collision)
+    {
+        // the collision
+        if(!onGround)
+        {
+            for (int i = 0; i < collision.contactCount; i++)
+            {
+                ContactPoint cp = collision.GetContact(i);
+
+                float dot = Vector3.Dot(cp.point.normalized, transform.position.normalized);
+
+                // this number should be adjusted. This tests to see if the player is considered to be on the ground.
+                // the higher the number, the steeper the slope (based on a 90 deg angle)
+                if (Mathf.Abs(dot) <= SLOPE_DOT)
+                {
+                    onGround = true;
+                    break;
+                }
+            }
+        }
+        
+
+    }
+
+    // player leaving ground
+    // private void OnCollisionExit(Collision collision)
+    // {
+    //     // checks to see if the object the player has left was a floor or not. 
+    //     // if(onGround)
+    //     // {
+    //     //     float dot = Vector3.Dot(transform.position.normalized, collision.transform.position.normalized);
+    //     // 
+    //     //     if (Mathf.Abs(dot) <= SLOPE_DOT)
+    //     //         onGround = false;
+    //     // }
+    // 
+    //     // this gets turned off in case the player left the ground.
+    //     // onGround = false;
+    // }
 
     // attaches the flag to the player
     public void AttachFlag(FlagObject flag)
@@ -170,76 +224,55 @@ public class PlayerObject : MonoBehaviour
         {
             // TODO: factor in deltaTime for movement
             // TODO: lerp camera for rotation
-
+            
             // Movement
             {
                 // forward and backward movement
                 if (Input.GetKey(KeyCode.W))
                 {
-                    // Vector3 force = Vector3.forward * movementSpeed * speedMult;
-                    // // Vector3 force = transform.forward * movementSpeed * speedMult;
-                    // rigidBody.AddForce(force);
-                    // direcVec += force;
-                    Vector3 force = transform.forward * movementSpeed * speedMult;
-                    rigidBody.AddForce(force);
+                    Vector3 force = transform.forward * movementSpeed * speedMult * Time.deltaTime;
+                    rigidBody.AddForce(force, ForceMode.Force);
                     direcVec += force;
                     stateMachine.SetState(1);
 
                 }
                 else if (Input.GetKey(KeyCode.S))
                 {
-                    // TODO: maybe instead of moving down you just rotate the player.
-                    // Vector3 force = Vector3.back * movementSpeed * speedMult;
-                    Vector3 force = -transform.forward * movementSpeed * backupFactor * speedMult;
-
-
+                    Vector3 force = -transform.forward * movementSpeed * backupFactor * speedMult * Time.deltaTime;
                     rigidBody.AddForce(force);
-
                     direcVec += force;
-
-                    // TODO: rotate if not facing backward.
 
                 }
 
                 // leftward and rightward movement
-                if (Input.GetKey(KeyCode.A))
+                if (Input.GetKey(KeyCode.A)) // turn left
                 {
-                    // Vector3 force = Vector3.left * movementSpeed * speedMult;
-                    // Vector3 force = -transform.right * movementSpeed * speedMult;
-                    // rigidBody.AddForce(force);
-                    // direcVec += force;
-
-
                     // if there is no velocity, set the player's rotation to -90 degrees.
-                    if (Input.GetKey(KeyCode.W)) // if the player is going foward
+                    if(Input.GetKey(KeyCode.W)) // if the player is going foward
                     {
-                        Vector3 force = -transform.right * movementSpeed * speedMult;
+                        Vector3 force = -transform.right * movementSpeed * speedMult * Time.deltaTime;
                         rigidBody.AddForce(force);
                         direcVec += force;
 
                         transform.Rotate(Vector3.up, -rotSpeed.y * Time.deltaTime);
                     }
-                    else // the player is not going forward so, rotate instead.
+                    else // the player is not pushing themself forward, so rotate instead.
                     {
                         transform.Rotate(Vector3.up, -rotSpeed.y * Time.deltaTime);
                     }
                 }
-                else if (Input.GetKey(KeyCode.D))
+                else if (Input.GetKey(KeyCode.D)) // turn right
                 {
-                    // Vector3 force = Vector3.right * movementSpeed * speedMult;
-                    // Vector3 force = transform.right * movementSpeed * speedMult;
-                    // rigidBody.AddForce(force);
-                    // direcVec += force;
-
                     // if there is no velocity, set the player's rotation to -90 degrees.
                     if (Input.GetKey(KeyCode.W)) // if the player is going foward
                     {
-                        Vector3 force = transform.right * movementSpeed * speedMult;
+                        Vector3 force = transform.right * movementSpeed * speedMult * Time.deltaTime;
                         rigidBody.AddForce(force);
                         direcVec += force;
-                        // transform.Rotate(Vector3.up, rotSpeed.y * Time.deltaTime);
+                        
+                        transform.Rotate(Vector3.up, rotSpeed.y * Time.deltaTime);
                     }
-                    else // the player is not going forward so, rotate instead.
+                    else // the player is not pushing themself forward, so rotate instead.
                     {
                         transform.Rotate(Vector3.up, rotSpeed.y * Time.deltaTime);
                     }
@@ -266,12 +299,12 @@ public class PlayerObject : MonoBehaviour
             // Hard Rotation (Snap)
             {
                 // rotate to the left (slow)
-                if (Input.GetKey(KeyCode.LeftArrow))
+                if(Input.GetKey(KeyCode.LeftArrow))
                 {
                     transform.Rotate(Vector3.up, -rotSpeed.y * Time.deltaTime);
                 }
                 // rotate to the right
-                else if (Input.GetKey(KeyCode.RightArrow))
+                else if(Input.GetKey(KeyCode.RightArrow))
                 {
                     transform.Rotate(Vector3.up, +rotSpeed.y * Time.deltaTime);
                 }
@@ -326,7 +359,7 @@ public class PlayerObject : MonoBehaviour
                 // }
 
                 // turn backwards
-                if (Input.GetKeyDown(KeyCode.DownArrow))
+                if(Input.GetKeyDown(KeyCode.DownArrow))
                 {
                     transform.Rotate(Vector3.up, 180.0F);
                 }
@@ -334,36 +367,18 @@ public class PlayerObject : MonoBehaviour
 
             // jump
             {
-                // TODO: check to see if this effects slopes.
-                if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space)) && rigidBody.velocity.y == 0.0F)
-                {
-                    // transform.position = new Vector3(transform.position.x, transform.position.y + 0.1F, transform.position.z);
-                    // rigidBody.AddExplosionForce(jumpForce * 1000.0f, transform.position, 1.0F);
-                    rigidBody.AddForce(Vector3.up * jumpForce * jumpMult * Time.deltaTime);
-                    // rigidBody.AddForce(Vector3.up * jumpForce);
 
+                // if the player is on the on the gound, and can jump.
+                // jump does NOT rely on delta time for consistency sake
+                if((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space)) && onGround)
+                {
+                    rigidBody.AddForce(Vector3.up * jumpForce * jumpMult, ForceMode.Impulse);
+                    onGround = false;
                 }
             }
 
-            // gets the angle
-            // {
-            //     Vector3 currVelo = rigidBody.velocity;
-            //     if(currVelo != new Vector3())
-            //     {
-            //         transform.LookAt(transform.position + currVelo);
-            //         transform.rotation = new Quaternion(0.0f, transform.rotation.y, 0.0F, 1.0F);
-            // 
-            //         // camera.rotation = transform.rotation.eulerAngles;
-            //         // camera.rotation.x = 0.0F;
-            //         // camera.rotation.y *= -1;
-            //         // camera.rotation.z = 0.0F;
-            //     }
-            //     
-            // }
-
-            // direcVec.Normalize();
-
             // caps velocity
+            // TODO: this might need to be changed for the jump.
             if (rigidBody.velocity.magnitude > maxVelocity)
             {
                 rigidBody.velocity = rigidBody.velocity.normalized * maxVelocity;
@@ -440,13 +455,13 @@ public class PlayerObject : MonoBehaviour
 
         // TODO: take this out or make it more efficient.
         // player isn't moving
-        if (stateMachine.state != 0 && rigidBody.velocity == new Vector3())
+        if(stateMachine.state != 0 && rigidBody.velocity == new Vector3())
         {
             stateMachine.SetState(0);
         }
 
         // entered death space
-        if (deathSpace.InDeathSpace(transform.position))
+        if(deathSpace.InDeathSpace(transform.position)) 
         {
             // takes away the flag
             if (flag != null)
@@ -465,7 +480,7 @@ public class PlayerObject : MonoBehaviour
         }
 
         // if the player has a flag, gain a point.
-        if (flag != null)
+        if(flag != null)
         {
             playerScore += Time.deltaTime;
             playerScoreText.text = "Player Score: " + Mathf.Floor(playerScore);

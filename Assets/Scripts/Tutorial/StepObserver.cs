@@ -9,10 +9,10 @@ public class StepObserver : StateObserver
     public Step step;
 
     // the state value for a started step.
-    int stepStartState = 0;
+    public int stepStartState = 0;
 
     // the state value for a completed step.
-    int stepEndState = 1;
+    public int stepEndState = 1;
 
     // Start is called before the first frame update
     void Start()

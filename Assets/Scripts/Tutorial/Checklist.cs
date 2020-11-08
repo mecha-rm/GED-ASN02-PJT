@@ -5,7 +5,7 @@ using UnityEngine;
 public class Checklist : MonoBehaviour
 {
     // the steps in the checklist.
-    public Queue<Step> steps;
+    public Queue<Step> steps = new Queue<Step>();
 
     // the amount of steps that have been completed.
     private int stepsCompleted = 0;
@@ -53,9 +53,15 @@ public class Checklist : MonoBehaviour
 
     // gets the number of the current step (starting at 1).
     // the index of this step is its step number minus 1.
-    public int GetStepNumber()
+    public int GetCurrentStepNumber()
     {
         return stepsCompleted + 1;
+    }
+    
+    // gets the remaining step amount.
+    public int GetRemainingStepCount()
+    {
+        return steps.Count;
     }
 
     // gets the number of completed steps
@@ -64,11 +70,16 @@ public class Checklist : MonoBehaviour
         return stepsCompleted;
     }
 
-
     // clears out all steps
     public void ClearSteps()
     {
         steps.Clear();
+    }
+
+    // returns 'true' if the list is complete.
+    public bool IsCompleteList()
+    {
+        return steps.Count == 0;
     }
 
     // called when a list is completed.
