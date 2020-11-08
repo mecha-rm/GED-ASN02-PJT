@@ -1008,7 +1008,7 @@ MonoBehaviour:
   stepList:
   - {fileID: 1097559581}
   - {fileID: 1513552324}
-  - {fileID: 1860081081}
+  - {fileID: 1363911978}
   stepText: {fileID: 316397086}
 --- !u!1 &816428082
 GameObject:
@@ -1319,7 +1319,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1020341191}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.7, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1860081078}
@@ -1720,6 +1720,70 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1263296056}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1363911976
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1363911977}
+  - component: {fileID: 1363911978}
+  - component: {fileID: 1363911979}
+  m_Layer: 0
+  m_Name: Active Step (Step 3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1363911977
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363911976}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.25, y: 0, z: -19.300001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1363911978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363911976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25868a1258ab737438d261f850abbbe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Flag Get
+  description: Obtain the flag
+  subject: {fileID: 1860081075}
+  watchForActive: 0
+--- !u!114 &1363911979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363911976}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4e311f418123d247b41a59cb2c66c52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subject: {fileID: 0}
+  step: {fileID: 1363911978}
+  stepStartState: 0
+  stepEndState: 1
 --- !u!1 &1444465878
 GameObject:
   m_ObjectHideFlags: 0
@@ -2510,13 +2574,9 @@ GameObject:
   - component: {fileID: 1860081078}
   - component: {fileID: 1860081077}
   - component: {fileID: 1860081076}
-  - component: {fileID: 1860081080}
-  - component: {fileID: 1860081082}
-  - component: {fileID: 1860081081}
-  - component: {fileID: 1860081079}
   m_Layer: 0
   m_Name: Flag (Step 3)
-  m_TagString: Untagged
+  m_TagString: Step
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2554,79 +2614,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1860081075}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 11.2, z: -60.7}
+  m_LocalPosition: {x: 0, y: 16, z: -60.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1020341192}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1860081079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1860081075}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4e311f418123d247b41a59cb2c66c52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  subject: {fileID: 1860081082}
-  step: {fileID: 1860081081}
-  stepStartState: 0
-  stepEndState: 1
---- !u!114 &1860081080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1860081075}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8704484221038e94e8305dbc107ecb75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  state: 0
-  stateNames:
-  - Free
-  - Grabbed
-  observers:
-  - {fileID: 1860081079}
---- !u!114 &1860081081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1860081075}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db18c5bbf108a445b22f11f99ebb2f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  name: Flag Get
-  description: Obtain the flag.
---- !u!114 &1860081082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1860081075}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10fb12425b65f7e49b8697190223e011, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  state: 0
-  stateNames:
-  - Free
-  - Grabbed
-  observers:
-  - {fileID: 1860081079}
 --- !u!1 &1863558047
 GameObject:
   m_ObjectHideFlags: 0

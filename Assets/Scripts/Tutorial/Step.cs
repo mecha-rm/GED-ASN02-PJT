@@ -5,7 +5,7 @@ using UnityEngine;
 // a step in the list
 public abstract class Step : MonoBehaviour
 {
-    private Checklist todoList = null;
+    protected Checklist checklist = null;
     // the number of the step in the list. Step numbers start at 1.
     public string name = "";
     public string description = "";
@@ -19,13 +19,13 @@ public abstract class Step : MonoBehaviour
     // gets the checklist this step is part of.
     public Checklist GetChecklist()
     {
-        return todoList;
+        return checklist;
     }
 
     // called when a step has been added to the list.
     public void OnStepAddition(Checklist newList)
     {
-        todoList = newList;
+        checklist = newList;
     }
 
     // called when a step is completed.
@@ -35,8 +35,8 @@ public abstract class Step : MonoBehaviour
     public bool IsCurrentStep()
     {
         // if a list has been added, check to see if this is the current step.
-        if (todoList != null)
-            return this == todoList.GetCurrentStep();
+        if (checklist != null)
+            return this == checklist.GetCurrentStep();
 
         return false;
     }

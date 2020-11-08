@@ -19,12 +19,16 @@ public class ActiveStep : Step
     // called when the step is completed.
     public override void OnStepCompletion()
     {
-        throw new System.NotImplementedException();
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // trigger
+        if(subject.active == watchForActive && checklist.GetCurrentStep() == this)
+        {
+            checklist.CompleteStep();
+        }
     }
 }
