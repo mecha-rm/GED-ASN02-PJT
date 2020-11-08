@@ -5,9 +5,11 @@ using UnityEngine;
 // a step in the list
 public abstract class Step : MonoBehaviour
 {
+    // the checklist
     protected Checklist checklist = null;
+
     // the number of the step in the list. Step numbers start at 1.
-    public string name = "";
+    public string title = "";
     public string description = "";
 
     // Start is called before the first frame update
@@ -27,6 +29,9 @@ public abstract class Step : MonoBehaviour
     {
         checklist = newList;
     }
+
+    // called when the step is activated (i.e. it is now the current step)
+    public abstract void OnStepActivation();
 
     // called when a step is completed.
     public abstract void OnStepCompletion();

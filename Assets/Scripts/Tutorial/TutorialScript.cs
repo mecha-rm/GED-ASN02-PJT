@@ -47,6 +47,18 @@ public class TutorialScript : MonoBehaviour
         // steps.Add(new Step());
     }
 
+    // pauses the tutorial when a prompt appears
+    public void PauseTutorial()
+    {
+        Time.timeScale = 0.0F;
+    }
+
+    // unpauses the tutorial when a prompt disappears
+    public void UnpauseTutorial()
+    {
+        Time.timeScale = 1.0F;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -58,7 +70,7 @@ public class TutorialScript : MonoBehaviour
                 currStep++;
 
                 stepText.text = "Step " + tutorialList.GetCurrentStepNumber() + " - " +
-                    tutorialList.GetCurrentStep().name + ": " + tutorialList.GetCurrentStep().description;
+                    tutorialList.GetCurrentStep().title + ":\n" + tutorialList.GetCurrentStep().description;
             }
             // if all steps have been completed.
             else if (tutorialList.IsCompleteList())

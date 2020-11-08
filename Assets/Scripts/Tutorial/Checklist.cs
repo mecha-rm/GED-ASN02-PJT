@@ -48,6 +48,10 @@ public class Checklist : MonoBehaviour
             OnCompleteList();
 
         stepsCompleted++;
+
+        // if there are still steps remaining. 
+        if (steps.Count > 0)
+            steps.Peek().OnStepActivation();
     }
 
     // gets the current step
