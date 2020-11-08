@@ -7,6 +7,9 @@ public class Checklist : MonoBehaviour
     // the steps in the checklist.
     public Queue<Step> steps = new Queue<Step>();
 
+    // sets whether the checklist has been activated or not.
+    public bool activeList = true;
+
     // the amount of steps that have been completed.
     private int stepsCompleted = 0;
 
@@ -43,12 +46,14 @@ public class Checklist : MonoBehaviour
         // list is completed. 
         if (steps.Count == 0)
             OnCompleteList();
+
+        stepsCompleted++;
     }
 
     // gets the current step
     public Step GetCurrentStep()
     {
-        return steps.Peek();
+        return (steps.Count == 0) ? null : steps.Peek();
     }
 
     // gets the number of the current step (starting at 1).

@@ -15,6 +15,9 @@ public class TutorialScript : MonoBehaviour
     // the text used to show the step.
     public Text stepText = null;
 
+    // the current step
+    private int currStep = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,13 +31,17 @@ public class TutorialScript : MonoBehaviour
             tutorialList.AddStep(stepList[i]);
         }
 
-        if(tutorialList != null)
-        {
-            if (!tutorialList.IsCompleteList())
-                stepText.text = "Step " + tutorialList.GetCurrentStepNumber() + ": " + tutorialList.GetCurrentStep().description;
-            else
-                stepText.text = "Tutorial is Complete!";
-        }
+        // if the tutorial list is active, show the text
+        // if(tutorialList != null && tutorialList.activeList)
+        // {
+        //     if (!tutorialList.IsCompleteList())
+        //         stepText.text = "Step " + tutorialList.GetCurrentStepNumber() + " - " + 
+        //             tutorialList.GetCurrentStep().name + ": " + tutorialList.GetCurrentStep().description;
+        //     else
+        //         stepText.text = "Tutorial is Complete!";
+        // 
+        //     currStep++;
+        // }
             
 
         // steps.Add(new Step());
@@ -43,13 +50,25 @@ public class TutorialScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if the tutorial is complete.
-        if(tutorialList.IsCompleteList())
+        if(tutorialList.activeList)
         {
-            string str = "All Steps Completed!";
+            // step as changed
+            if (currStep < tutorialList.GetCurrentStepNumber() && !tutorialList.IsCompleteList())
+            {
+                currStep++;
 
-            if (stepText.text != str)
-                stepText.text = str;
+                stepText.text = "Step " + tutorialList.GetCurrentStepNumber() + " - " +
+                    tutorialList.GetCurrentStep().name + ": " + tutorialList.GetCurrentStep().description;
+            }
+            // if all steps have been completed.
+            else if (tutorialList.IsCompleteList())
+            {
+                string str = "All Steps Completed!";
+
+                if (stepText.text != str)
+                    stepText.text = str;
+            }
+
         }
     }
 }
