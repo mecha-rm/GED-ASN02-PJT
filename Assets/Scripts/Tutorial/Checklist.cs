@@ -19,7 +19,20 @@ public class Checklist : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        // starts the first step if there are steps
+        if (activeList && steps.Count > 0)
+            steps.Peek().OnStepActivation();
+    }
+
+    // if the list is active
+    public void SetActiveList(bool active)
+    {
+        activeList = active;
+
+        // if there are steps in the active list.
+        if(activeList && steps.Count > 0)
+            steps.Peek().OnStepActivation();
+
     }
 
     // adds a step to the list of steps for the checklist.
