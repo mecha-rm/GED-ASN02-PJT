@@ -6,7 +6,6 @@
     * 
  */
 
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -327,7 +326,7 @@ namespace GED
         public void AddObjectToSaveList(GameObject entity)
         {
             // the list contains the files
-            if(fileObjectList.Contains(entity))
+            if (fileObjectList.Contains(entity))
                 fileObjectList.Add(entity);
         }
 

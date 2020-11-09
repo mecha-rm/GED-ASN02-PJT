@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 // script for gameplay items
 public abstract class GameplayItem : MonoBehaviour
@@ -9,7 +7,7 @@ public abstract class GameplayItem : MonoBehaviour
     // if 'true', the item's effect runs out after (X) amount of time has passed.
     // if 'false', the item must be manually turned off by calling DeactivateEffect()
     bool timedItem = true;
-    
+
     // the maximum effect time and the current effect time.
     private float maxEffectTime = 0.0F;
     private float currEffectTime = 0.0F;
@@ -20,7 +18,7 @@ public abstract class GameplayItem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
 

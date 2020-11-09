@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 // the state machine class is based on a script written for assignment 1 of Game Engine Design & Implementation
 // observes the state of a subject
@@ -29,7 +27,7 @@ public abstract class StateObserver : MonoBehaviour
             subject.DetachObserver(this);
 
         // attaches this observer to a new subject. This sets the value of 'subject'.
-        if(newSubject != null)
+        if (newSubject != null)
             newSubject.AttachObserver(this);
     }
 

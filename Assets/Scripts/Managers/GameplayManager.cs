@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -34,7 +32,7 @@ public class GameplayManager : MonoBehaviour
     void Update()
     {
         // player 1 has won
-        if(p1 != null)
+        if (p1 != null)
         {
             if (p1.playerScore >= winScore)
                 SceneManager.LoadScene("EndScene");

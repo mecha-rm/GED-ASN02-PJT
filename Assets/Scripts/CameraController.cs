@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
@@ -110,13 +108,13 @@ public class CameraController : MonoBehaviour
         }
 
         // resets the camera's position to what it was when the program first ran.
-        if(Input.GetKey(KeyCode.T))
+        if (Input.GetKey(KeyCode.T))
         {
             transform.position = defaultPosition;
         }
 
         // resets the camera's orientation to what it was when the program first ran.
-        if(Input.GetKey(KeyCode.R))
+        if (Input.GetKey(KeyCode.R))
         {
             transform.rotation = defaultRotation;
         }

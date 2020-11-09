@@ -5,12 +5,10 @@
  * https://bitbucket.org/stupro_hskl_betreuung_kessler/learnit_merged_ss16/raw/e5244ebb38c8fe70759e632ea4224e48f5ca5833/Unity/LearnIT_Merged/Assets/Scripts/Util/ObjectSerializationExtension.cs
  */
 
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Xml;
 using UnityEngine;
 
 public class FileStream : MonoBehaviour
@@ -55,7 +53,7 @@ public class FileStream : MonoBehaviour
     public void AddObjectToList(GameObject entity)
     {
         // an object can't be written in twice.
-        foreach(GameObject obj in objects)
+        foreach (GameObject obj in objects)
         {
             if (obj == entity)
                 return;
@@ -82,11 +80,11 @@ public class FileStream : MonoBehaviour
     {
         BinaryFormatter converter = new BinaryFormatter();
         MemoryStream mStream = new MemoryStream();
-        
+
         converter.Serialize(mStream, entity);
         return mStream.ToArray();
     }
-    
+
     // convert bytes to a game object
     public static GameObject ConvertBytesToObject(byte[] data)
     {

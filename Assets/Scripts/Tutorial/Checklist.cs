@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Checklist : MonoBehaviour
@@ -30,7 +29,7 @@ public class Checklist : MonoBehaviour
         activeList = active;
 
         // if there are steps in the active list.
-        if(activeList && steps.Count > 0)
+        if (activeList && steps.Count > 0)
             steps.Peek().OnStepActivation();
 
     }
@@ -79,7 +78,7 @@ public class Checklist : MonoBehaviour
     {
         return stepsCompleted + 1;
     }
-    
+
     // gets the remaining step amount.
     public int GetRemainingStepCount()
     {
@@ -113,6 +112,6 @@ public class Checklist : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

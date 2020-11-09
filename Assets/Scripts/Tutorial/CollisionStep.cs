@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Xml;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class CollisionStep : Step
@@ -23,7 +21,7 @@ public class CollisionStep : Step
             entity.SetActive(active);
 
         // if the objects pause the game when active
-        if(objectsPause && objects.Count > 0)
+        if (objectsPause && objects.Count > 0)
         {
             Time.timeScale = (active) ? 0.0F : 1.0F;
         }
@@ -60,6 +58,6 @@ public class CollisionStep : Step
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

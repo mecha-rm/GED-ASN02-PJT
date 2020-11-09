@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-// observes a state machine
+﻿// observes a state machine
 public class StepObserver : StateObserver
 {
     // the step
@@ -17,7 +13,7 @@ public class StepObserver : StateObserver
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // called when the state is changed.
@@ -25,9 +21,9 @@ public class StepObserver : StateObserver
     public override void OnStateChange()
     {
         Checklist cl = step.GetChecklist();
-        
+
         // if the current step is set to the observer, then the step is complete.
-        if(subject.GetStateNumber() == stepEndState && cl.GetCurrentStep() == step)
+        if (subject.GetStateNumber() == stepEndState && cl.GetCurrentStep() == step)
         {
             // the step has been completed.
             cl.CompleteStep();
@@ -37,6 +33,6 @@ public class StepObserver : StateObserver
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

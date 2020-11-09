@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FollowerCamera : MonoBehaviour
 {
@@ -9,7 +7,7 @@ public class FollowerCamera : MonoBehaviour
 
     // the camera distance from the target
     public Vector3 distance = new Vector3(0, 0, 0); // camera distance from player
-   
+
     // the camera's rotation
     public Vector3 rotation = new Vector3(0, 0, 0); // the camera's default orientation
 
@@ -56,7 +54,7 @@ public class FollowerCamera : MonoBehaviour
     void Update()
     {
         // vector for world origin (0, 0, 0)
-        
+
         // saves the original position and rotation
         Vector3 origPos = transform.position;
         Quaternion origRot = transform.rotation;

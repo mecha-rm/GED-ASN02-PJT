@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,7 +37,7 @@ public class DialogueBox : MonoBehaviour
         pages.Remove(page);
 
         // clears out text if there are no pages left
-        if(pages.Count == 0)
+        if (pages.Count == 0)
         {
             currPageIndex = -1;
             text.text = "";
@@ -56,7 +55,7 @@ public class DialogueBox : MonoBehaviour
 
                 // gets the new piece of text
                 text.text = pages[currPageIndex];
-            } 
+            }
         }
     }
 
@@ -64,7 +63,7 @@ public class DialogueBox : MonoBehaviour
     public string GetCurrentPage()
     {
         // if the current page is not avialable or does not exist
-        if(currPageIndex < 0 || currPageIndex >= pages.Count)
+        if (currPageIndex < 0 || currPageIndex >= pages.Count)
         {
             return "";
         }
@@ -78,7 +77,7 @@ public class DialogueBox : MonoBehaviour
     public void SetCurrentPage(int newPage)
     {
         // the page is available
-        if(newPage >= 0 && newPage < pages.Count)
+        if (newPage >= 0 && newPage < pages.Count)
         {
             currPageIndex = newPage;
             text.text = pages[currPageIndex];
@@ -100,6 +99,6 @@ public class DialogueBox : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

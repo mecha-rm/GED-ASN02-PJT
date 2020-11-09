@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,11 +21,11 @@ public class TutorialScript : MonoBehaviour
     void Start()
     {
         // gets the checklist if it hasn't been set.
-        if(tutorialList == null)
+        if (tutorialList == null)
             tutorialList = GetComponent<Checklist>();
 
         // goes through the steps list and adds them to the Checklist
-        for(int i = 0; i < stepList.Count; i++)
+        for (int i = 0; i < stepList.Count; i++)
         {
             tutorialList.AddStep(stepList[i]);
         }
@@ -45,7 +44,7 @@ public class TutorialScript : MonoBehaviour
         // 
         //     currStep++;
         // }
-            
+
 
         // steps.Add(new Step());
     }
@@ -65,7 +64,7 @@ public class TutorialScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(tutorialList.activeList)
+        if (tutorialList.activeList)
         {
             // step as changed
             if (currStep < tutorialList.GetCurrentStepNumber() && !tutorialList.IsCompleteList())

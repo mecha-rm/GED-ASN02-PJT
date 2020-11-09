@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CollisionStateMachine : StateMachine
 {
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // the object is triggered.
@@ -19,6 +17,6 @@ public class CollisionStateMachine : StateMachine
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

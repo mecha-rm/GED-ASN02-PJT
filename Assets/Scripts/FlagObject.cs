@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TreeEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FlagObject : MonoBehaviour
 {
@@ -26,7 +23,7 @@ public class FlagObject : MonoBehaviour
         // a player has obtained the flag.
         if (po != null)
             AttachToPlayer(po);
-        
+
     }
 
     // attaches the flag to the player
@@ -35,7 +32,7 @@ public class FlagObject : MonoBehaviour
         po.flag = this;
         owner = po;
         gameObject.SetActive(false); // hide object
-        
+
         // shows flag indicator
         if (po.flagIndicator != null)
             po.flagIndicator.SetActive(true);
@@ -61,6 +58,6 @@ public class FlagObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

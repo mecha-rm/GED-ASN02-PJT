@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ActiveStep : Step
@@ -64,7 +63,7 @@ public class ActiveStep : Step
     void Update()
     {
         // trigger
-        if(subject.active == watchForActive && checklist.GetCurrentStep() == this)
+        if (subject.active == watchForActive && checklist.GetCurrentStep() == this)
         {
             checklist.CompleteStep();
         }
