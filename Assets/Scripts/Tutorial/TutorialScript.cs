@@ -31,6 +31,9 @@ public class TutorialScript : MonoBehaviour
             tutorialList.AddStep(stepList[i]);
         }
 
+        // active tutorial checklist
+        tutorialList.SetActiveList(true);
+
         // if the tutorial list is active, show the text
         // if(tutorialList != null && tutorialList.activeList)
         // {

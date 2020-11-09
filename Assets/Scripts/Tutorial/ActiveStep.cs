@@ -19,7 +19,6 @@ public class ActiveStep : Step
     // Start is called before the first frame update
     void Start()
     {
-        SetActiveObjects(true);
     }
 
     // sets whether all objects should be active or not.

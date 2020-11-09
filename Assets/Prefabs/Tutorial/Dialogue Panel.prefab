@@ -795,5 +795,5 @@ MonoBehaviour:
   text: {fileID: 4266697161769224981}
   currPageIndex: 0
   pages:
-  - This is a Test
-  - This is only a Test
+  - This is a test.
+  - This is only a test.
