@@ -14,19 +14,19 @@ public class MetricsLogger : MonoBehaviour
 
     // adds the metric
     [DllImport(DLL_NAME)]
-    private static extern void AddMetric([MarshalAs(UnmanagedType.LPStr)] string key, int length, float value);
+    private static extern void AddMetric([MarshalAs(UnmanagedType.LPStr)] string key, float value);
 
     // edits a metric
     [DllImport(DLL_NAME)]
-    private static extern void EditMetric([MarshalAs(UnmanagedType.LPStr)] string key, int length, float newValue);
+    private static extern void EditMetric([MarshalAs(UnmanagedType.LPStr)] string key, float newValue);
 
     // removes a metric based on its key.
     [DllImport(DLL_NAME)]
-    private static extern void RemoveMetric([MarshalAs(UnmanagedType.LPStr)] string key, int length);
+    private static extern void RemoveMetric([MarshalAs(UnmanagedType.LPStr)] string key);
 
     // returns a metric based on the provided key
     [DllImport(DLL_NAME)]
-    private static extern float GetMetric([MarshalAs(UnmanagedType.LPStr)] string key, int length);
+    private static extern float GetMetric([MarshalAs(UnmanagedType.LPStr)] string key);
 
     // metric count
     [DllImport(DLL_NAME)]
@@ -42,7 +42,7 @@ public class MetricsLogger : MonoBehaviour
 
     // sets the file
     [DllImport(DLL_NAME)]
-    private static extern void SetFile([MarshalAs(UnmanagedType.LPStr)] string key, int length);
+    private static extern void SetFile([MarshalAs(UnmanagedType.LPStr)] string key);
 
     // gets the file
     [DllImport(DLL_NAME, EntryPoint = "GetFile")]
@@ -60,30 +60,110 @@ public class MetricsLogger : MonoBehaviour
     [DllImport(DLL_NAME)]
     private static extern int ExportMetrics();
 
-    // 
+    
+    // adds a metric to logger
+    public void AddMetricToLogger(string key, float value)
+    {
+        AddMetric(key, value);
+    }
+
+    // edits a metric
+    public void EditMetricFromLogger(string key, float newValue)
+    {
+        EditMetric(key, newValue);
+    }
+
+    // removes a metric
+    public void RemoveMetricFromLogger(string key)
+    {
+        RemoveMetric(key);
+    }
+
+    // gets the metric from the logger.
+    public float GetMetricFromLogger(string key)
+    {
+        return GetMetric(key);
+    }
+
+    // gets the number of metrics
+    public int GetNumberOfMetrics()
+    {
+        return GetMetricCount();
+    }
+
+    // checks to see if the logger is empty
+    public bool LoggerIsEmpty()
+    {
+        return (IsEmpty() == 0) ? false : true;
+    }
+
+    // clears the logger
+    public void ClearLogger()
+    {
+        Clear();
+    }
+
+    // sets the file
+    public void SetLoggerFile(string file)
+    {
+        SetFile(file);
+    }
+
+    // returns the file name and path
+    public string GetLoggerFile()
+    {
+        return Marshal.PtrToStringAnsi(GetFile());
+    }
+
+    // returns the name length of the logger.
+    public int GetLoggerFileNameLength()
+    {
+        return GetFileNameLength();
+    }
+
+    // import metrics
+    public bool LoadMetrics()
+    {
+        return (ImportMetrics() == 0) ? false : true;
+    }
+
+    // saves metrics
+    public bool SaveMetrics()
+    {
+        return (ExportMetrics() == 0) ? false : true;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        string file = "Assets/Saves/test.txt";
-
-        SetFile(file, 8);
-        bool x = (ImportMetrics() == 0) ? false : true;
-
-        // AddMetric("A", 1, 19.5F);
-        // AddMetric("B", 1, -23.2F);
-        // AddMetric("C", 1, 50.0F);
-
-        int count = GetMetricCount();
-
-        Debug.Log("Count: " + count);
-        Debug.Log("A: " + GetMetric("A", 1));
-        Debug.Log("B: " + GetMetric("B", 1));
-        Debug.Log("C: " + GetMetric("C", 1));
-
-        // SetFile(file, 8);
-        // bool x = (ExportMetrics() == 0) ? false : true;
-        Debug.Log("Success: " + x);
+        // string file = "Assets/Saves/test.txt";
+        // 
+        // SetFile(file);
+        // bool check = false;
+        // check = (ImportMetrics() == 0) ? false : true;
+        // 
+        // string getfile = GetLoggerFile();
+        // 
+        // if (getfile == file)
+        //     Debug.Log(getfile + " saved successfully");
+        // 
+        // // AddMetric("A", 19.5F);
+        // // AddMetric("B", -23.2F);
+        // // AddMetric("C", 50.0F);
+        // // AddMetric("D", -102.0F);
+        // // AddMetric("E A", 10.5F);
+        // 
+        // int count = GetMetricCount();
+        // 
+        // Debug.Log("Count: " + count);
+        // Debug.Log("A: " + GetMetric("A"));
+        // Debug.Log("B: " + GetMetric("B"));
+        // Debug.Log("C: " + GetMetric("C"));
+        // Debug.Log("D: " + GetMetric("D"));
+        // Debug.Log("E A: " + GetMetric("E A"));
+        // 
+        // // check = (ExportMetrics() == 0) ? false : true;
+        // Debug.Log("Success: " + check);
     }
 
     // Update is called once per frame
