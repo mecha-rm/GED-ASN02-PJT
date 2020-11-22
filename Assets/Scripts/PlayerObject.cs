@@ -1,4 +1,7 @@
 ﻿// class for the player
+using System.Collections;
+using System.Collections.Generic;
+using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +12,7 @@ public class PlayerObject : MonoBehaviour
     public StateMachine stateMachine = null;
 
     // the player number
-    public int playerNumber = 1;
+    public int playerNumber = 0;
     public float playerScore = 0.0F;
     public Text playerScoreText = null; // TODO: maybe make a dedicated script to handle this.
 
@@ -28,17 +31,18 @@ public class PlayerObject : MonoBehaviour
 
     // camera controls
     public FollowerCamera playerCamera; // the player's camera (TODO: generate a dedicated camera for the player)
-    public Vector3 camPosOffset = new Vector3(0, 3, -7); // the offset for the camera that's attached to the player.
+    public Vector3 cameraDistance = new Vector3(0, 3, -7); // the offset for the camera that's attached to the player.
 
     private Vector3 direcVec; // the vector direction
     private Vector3 lastPos; // the player's previous position
 
-    // TODO: TEMPORARY
+    // TODO: TEMPORARY (?)
+    // TODO: the gameplay manager or death space should look at the player objects and see if they're dead.
+    // TODO: the spawn positions should be in the gameplay manager since it should have the map data. Move it later.
     // this resets the player's position once they hit the death space. The way this is handled by change.
-    public DeathSpace deathSpace;
     public Vector3 spawnPos = new Vector3(); // position upon spawning
-    private Quaternion spawnRot = new Quaternion(0, 0, 0, 1); // rotation beyond spawning
-    private Vector3 spawnScl = new Vector3(); // scale upon spawning
+    public Quaternion spawnRot = new Quaternion(0, 0, 0, 1); // rotation beyond spawning
+    public Vector3 spawnScl = new Vector3(); // scale upon spawning
 
     // // saves the rotation of the camera
     // private Vector3 camRot = new Vector3(0.0F, 0.0F, 0.0F);
@@ -86,6 +90,27 @@ public class PlayerObject : MonoBehaviour
         //     camera.distance = camPosOffset;
         // }
 
+        // if no player camera has been set, a new one will be created.
+        if(playerCamera == null)
+        {
+            // creates an empty player object and gives it a camera.
+            GameObject camObject = new GameObject("Player " + playerNumber + " Camera");
+            Camera camera = camObject.AddComponent<Camera>();
+            camera.depth = -1;
+
+            // adds a follower camera script, and gives it the base value.
+            playerCamera = camObject.AddComponent<FollowerCamera>();
+            playerCamera.target = gameObject;
+            playerCamera.distance = cameraDistance;
+            playerCamera.useParentRotation = true;
+
+        }
+        else if(playerCamera.target != gameObject)
+        {
+            playerCamera.target = gameObject;
+            playerCamera.distance = cameraDistance;
+        }
+
         // gets values to be reset upon spawning
         spawnPos = transform.position;
         spawnRot = transform.rotation;
@@ -103,7 +128,7 @@ public class PlayerObject : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     {
         // the collision
-        if (!onGround)
+        if(!onGround)
         {
             for (int i = 0; i < collision.contactCount; i++)
             {
@@ -120,7 +145,7 @@ public class PlayerObject : MonoBehaviour
                 }
             }
         }
-
+        
 
     }
 
@@ -214,6 +239,33 @@ public class PlayerObject : MonoBehaviour
     //     }
     // }
 
+    // respawns the player. Doing so takes away the flag.
+    // this is called when entering the death space.
+    public void Respawn()
+    {
+        // takes away the flag
+        if (flag != null)
+            flag.DetachFromPlayer();
+
+        // returns player to spawn position
+        transform.position = spawnPos;
+        transform.rotation = spawnRot;
+        transform.localScale = spawnScl;
+
+        // remove all velocity
+        rigidBody.velocity = new Vector3();
+        rigidBody.angularVelocity = new Vector3();
+        stateMachine.SetState(0);
+    }
+
+    // TODO: set spawn position
+    public void SetSpawn(Vector3 pos, Quaternion rot, Vector3 scl)
+    {
+        spawnPos = pos;
+        spawnRot = rot;
+        spawnScl = scl;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -221,7 +273,7 @@ public class PlayerObject : MonoBehaviour
         {
             // TODO: factor in deltaTime for movement
             // TODO: lerp camera for rotation
-
+            
             // Movement
             {
                 // forward and backward movement
@@ -245,7 +297,7 @@ public class PlayerObject : MonoBehaviour
                 if (Input.GetKey(KeyCode.A)) // turn left
                 {
                     // if there is no velocity, set the player's rotation to -90 degrees.
-                    if (Input.GetKey(KeyCode.W)) // if the player is going foward
+                    if(Input.GetKey(KeyCode.W)) // if the player is going foward
                     {
                         Vector3 force = -transform.right * movementSpeed * speedMult * Time.deltaTime;
                         rigidBody.AddForce(force);
@@ -266,7 +318,7 @@ public class PlayerObject : MonoBehaviour
                         Vector3 force = transform.right * movementSpeed * speedMult * Time.deltaTime;
                         rigidBody.AddForce(force);
                         direcVec += force;
-
+                        
                         transform.Rotate(Vector3.up, rotSpeed.y * Time.deltaTime);
                     }
                     else // the player is not pushing themself forward, so rotate instead.
@@ -296,12 +348,12 @@ public class PlayerObject : MonoBehaviour
             // Hard Rotation (Snap)
             {
                 // rotate to the left (slow)
-                if (Input.GetKey(KeyCode.LeftArrow))
+                if(Input.GetKey(KeyCode.LeftArrow))
                 {
                     transform.Rotate(Vector3.up, -rotSpeed.y * Time.deltaTime);
                 }
                 // rotate to the right
-                else if (Input.GetKey(KeyCode.RightArrow))
+                else if(Input.GetKey(KeyCode.RightArrow))
                 {
                     transform.Rotate(Vector3.up, +rotSpeed.y * Time.deltaTime);
                 }
@@ -356,7 +408,7 @@ public class PlayerObject : MonoBehaviour
                 // }
 
                 // turn backwards
-                if (Input.GetKeyDown(KeyCode.DownArrow))
+                if(Input.GetKeyDown(KeyCode.DownArrow))
                 {
                     transform.Rotate(Vector3.up, 180.0F);
                 }
@@ -367,7 +419,7 @@ public class PlayerObject : MonoBehaviour
 
                 // if the player is on the on the gound, and can jump.
                 // jump does NOT rely on delta time for consistency sake
-                if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space)) && onGround)
+                if((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space)) && onGround)
                 {
                     rigidBody.AddForce(Vector3.up * jumpForce * jumpMult, ForceMode.Impulse);
                     onGround = false;
@@ -450,37 +502,24 @@ public class PlayerObject : MonoBehaviour
         //     }
         // }
 
-        // TODO: take this out or make it more efficient.
-        // player isn't moving
-        if (stateMachine.state != 0 && rigidBody.velocity == new Vector3())
+        // if the camera distance has changed.
+        if(cameraDistance != playerCamera.distance)
         {
-            stateMachine.SetState(0);
+            playerCamera.distance = cameraDistance;
         }
 
-        // entered death space
-        if (deathSpace.InDeathSpace(transform.position))
+        // TODO: take this out or make it more efficient.
+        // player isn't moving
+        if(stateMachine.state != 0 && rigidBody.velocity == new Vector3())
         {
-            // takes away the flag
-            if (flag != null)
-                flag.DetachFromPlayer();
-
-            // returns player to spawn position
-            // TODO: make changes for death
-            transform.position = spawnPos;
-            transform.rotation = spawnRot;
-            transform.localScale = spawnScl;
-
-            // remove all velocity
-            rigidBody.velocity = new Vector3();
-            rigidBody.angularVelocity = new Vector3();
             stateMachine.SetState(0);
         }
 
         // if the player has a flag, gain a point.
-        if (flag != null)
+        if(flag != null)
         {
             playerScore += Time.deltaTime;
-            playerScoreText.text = "Player Score: " + Mathf.Floor(playerScore);
+            playerScoreText.text = "Player Score: " + Mathf.Floor(playerScore); // "Player Score: " +
         }
 
         // saves the player's current position

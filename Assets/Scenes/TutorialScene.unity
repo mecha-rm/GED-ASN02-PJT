@@ -714,6 +714,7 @@ GameObject:
   - component: {fileID: 316397085}
   - component: {fileID: 316397087}
   - component: {fileID: 316397086}
+  - component: {fileID: 316397088}
   m_Layer: 5
   m_Name: Step Text
   m_TagString: Untagged
@@ -782,6 +783,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 316397084}
   m_CullTransparentMesh: 0
+--- !u!114 &316397088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 316397084}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 0.5, y: -0.5}
+  m_UseGraphicAlpha: 1
 --- !u!1 &352587586
 GameObject:
   m_ObjectHideFlags: 0
@@ -878,8 +894,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 673d71784134cfd48872d202820a56fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1959659160}
   distance: {x: 0, y: 4, z: -8}
+  target: {fileID: 1959659160}
   rotation: {x: 0, y: 0, z: 0}
   useParentRotation: 1
 --- !u!1 &369021180
@@ -895,6 +911,7 @@ GameObject:
   - component: {fileID: 369021184}
   - component: {fileID: 369021183}
   - component: {fileID: 369021182}
+  - component: {fileID: 369021186}
   m_Layer: 5
   m_Name: Time Text
   m_TagString: Untagged
@@ -965,7 +982,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -994,6 +1011,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 369021180}
   m_CullTransparentMesh: 0
+--- !u!114 &369021186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369021180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &396882110
 GameObject:
   m_ObjectHideFlags: 0
@@ -1005,6 +1037,7 @@ GameObject:
   - component: {fileID: 396882111}
   - component: {fileID: 396882113}
   - component: {fileID: 396882112}
+  - component: {fileID: 396882114}
   m_Layer: 5
   m_Name: Objective Text
   m_TagString: Untagged
@@ -1044,7 +1077,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1073,6 +1106,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 396882110}
   m_CullTransparentMesh: 0
+--- !u!114 &396882114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396882110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &486896935
 GameObject:
   m_ObjectHideFlags: 0
@@ -1457,10 +1505,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   winScore: 3
   objectiveText: {fileID: 396882112}
+  playerCount: 0
   p1: {fileID: 1959659162}
   p2: {fileID: 0}
   p3: {fileID: 0}
   p4: {fileID: 0}
+  deathSpace: {fileID: 0}
 --- !u!4 &771292241
 Transform:
   m_ObjectHideFlags: 0
@@ -2501,6 +2551,7 @@ GameObject:
   - component: {fileID: 1444465879}
   - component: {fileID: 1444465881}
   - component: {fileID: 1444465880}
+  - component: {fileID: 1444465882}
   m_Layer: 5
   m_Name: P1 Score Text
   m_TagString: Untagged
@@ -2540,7 +2591,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2569,6 +2620,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1444465878}
   m_CullTransparentMesh: 0
+--- !u!114 &1444465882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1444465878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1513552322
 GameObject:
   m_ObjectHideFlags: 0
@@ -3212,7 +3278,7 @@ AudioSource:
   m_Volume: 0.15
   m_Pitch: 1
   Loop: 1
-  Mute: 0
+  Mute: 1
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
@@ -3615,9 +3681,10 @@ MonoBehaviour:
   backupFactor: 0.5
   momentumMovement: 1
   playerCamera: {fileID: 0}
-  camPosOffset: {x: 0, y: 4, z: -8}
-  deathSpace: {fileID: 771292239}
+  cameraDistance: {x: 0, y: 3, z: -7}
   spawnPos: {x: 0, y: 1, z: 0}
+  spawnRot: {x: 0, y: 0, z: 0, w: 1}
+  spawnScl: {x: 0, y: 0, z: 0}
   speedMult: 1
   knockbackMult: 1
   jumpMult: 1

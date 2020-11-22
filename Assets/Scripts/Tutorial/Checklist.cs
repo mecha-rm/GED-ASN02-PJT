@@ -4,7 +4,11 @@ using UnityEngine;
 public class Checklist : MonoBehaviour
 {
     // the steps in the checklist.
-    public Queue<Step> steps = new Queue<Step>();
+    // TODO: replace with regular List
+    public Queue<Step> stepsLeft = new Queue<Step>();
+
+    // a list of the steps that are used for the quest. This is used to show all steps.
+    private List<Step> stepList = new List<Step>();
 
     // sets whether the checklist has been activated or not.
     public bool activeList = true;
@@ -13,14 +17,14 @@ public class Checklist : MonoBehaviour
     private int stepsCompleted = 0;
 
     // destroys steps upon completing them.
-    public bool destroySteps = true;
+    // public bool destroySteps = true;
 
     // Start is called before the first frame update
     void Start()
     {
         // starts the first step if there are steps
-        if (activeList && steps.Count > 0)
-            steps.Peek().OnStepActivation();
+        if (activeList && stepsLeft.Count > 0)
+            stepsLeft.Peek().OnStepActivation();
     }
 
     // if the list is active
@@ -29,47 +33,50 @@ public class Checklist : MonoBehaviour
         activeList = active;
 
         // if there are steps in the active list.
-        if (activeList && steps.Count > 0)
-            steps.Peek().OnStepActivation();
+        if (activeList && stepsLeft.Count > 0)
+            stepsLeft.Peek().OnStepActivation();
 
     }
 
     // adds a step to the list of steps for the checklist.
     public void AddStep(Step newStep)
     {
-        steps.Enqueue(newStep);
+        stepsLeft.Enqueue(newStep);
         newStep.OnStepAddition(this);
+
+        // adds a new step to the quest list.
+        stepList.Add(newStep);
     }
 
     // completes a step, which pops it off of the queue.
     public void CompleteStep()
     {
         // if there are no steps
-        if (steps.Count == 0)
+        if (stepsLeft.Count == 0)
             OnCompleteList();
 
-        Step doneStep = steps.Dequeue();
+        Step doneStep = stepsLeft.Dequeue();
         doneStep.OnStepCompletion();
 
         // if the step should be destroyed.
-        if (destroySteps)
-            Destroy(doneStep);
+        // if (destroySteps)
+        //     Destroy(doneStep);
 
         // list is completed. 
-        if (steps.Count == 0)
+        if (stepsLeft.Count == 0)
             OnCompleteList();
 
         stepsCompleted++;
 
         // if there are still steps remaining. 
-        if (steps.Count > 0)
-            steps.Peek().OnStepActivation();
+        if (stepsLeft.Count > 0)
+            stepsLeft.Peek().OnStepActivation();
     }
 
     // gets the current step
     public Step GetCurrentStep()
     {
-        return (steps.Count == 0) ? null : steps.Peek();
+        return (stepsLeft.Count == 0) ? null : stepsLeft.Peek();
     }
 
     // gets the number of the current step (starting at 1).
@@ -82,7 +89,7 @@ public class Checklist : MonoBehaviour
     // gets the remaining step amount.
     public int GetRemainingStepCount()
     {
-        return steps.Count;
+        return stepsLeft.Count;
     }
 
     // gets the number of completed steps
@@ -91,22 +98,45 @@ public class Checklist : MonoBehaviour
         return stepsCompleted;
     }
 
+    // TODO: add ability to remove step
+
     // clears out all steps
     public void ClearSteps()
     {
-        steps.Clear();
+        stepsLeft.Clear();
+        stepList.Clear();
     }
 
     // returns 'true' if the list is complete.
     public bool IsCompleteList()
     {
-        return steps.Count == 0;
+        return stepsLeft.Count == 0;
     }
 
     // called when a list is completed.
     public void OnCompleteList()
     {
 
+    }
+
+    // restarts the list
+    public void RestartQuest()
+    {
+        // clears out all steps
+        stepsLeft.Clear();
+        
+        // while there are steps left
+        // while(stepsLeft.Count != 0)
+        // {
+        // 
+        // }
+
+        // adds in all steps again
+        foreach(Step step in stepList)
+        {
+            stepsLeft.Enqueue(step);
+            step.OnStepAddition(this);
+        }
     }
 
     // Update is called once per frame

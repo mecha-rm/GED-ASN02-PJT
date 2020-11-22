@@ -1,6 +1,9 @@
 ﻿// References
 // * https://www.youtube.com/watch?v=lYIRm4QEqro&feature=emb_rel_pause
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,11 +19,11 @@ public class PlayerController : MonoBehaviour
 
     // locks the keys to prevent the object from moving using the keyboard or mouse.
     public bool controlLock = false;
-
+    
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame

@@ -1,4 +1,6 @@
 ﻿using GED;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,8 +23,8 @@ public class ObserverText : StateObserver
         GameObject selected = subject.GetComponent<UI_Manager>().GetSelectedObject();
         string newText = ""; // new text
         int stateNum = subject.GetComponent<StateMachine>().GetStateNumber();
-
-        switch (stateNum)
+           
+        switch(stateNum)
         {
             case 0: // no selection
                 newText = "Selection: None";
@@ -50,6 +52,6 @@ public class ObserverText : StateObserver
     void Update()
     {
         // Debug.LogError("Update");
-
+      
     }
 }
