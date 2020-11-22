@@ -1,12 +1,24 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Checklist : MonoBehaviour
 {
+    public string title = "";
+    public string description = "";
+
     // the steps in the checklist.
     // TODO: replace with regular List
     public List<Step> steps;
 
+    // the list of steps
+    // private GameObject stepsList;
+
+    // the step list
+    public GameObject stepList = null;
+    public Text stepListText = null;
+
+    // the current step
     public int currentStep = 0;
 
     // sets whether the checklist has been activated or not.
@@ -23,7 +35,21 @@ public class Checklist : MonoBehaviour
     {
         // starts the first step if there are steps
         if (activeList && steps.Count > 0)
+        {
             steps[currentStep].OnStepActivation();
+        }
+
+        // checks to see if the step list is active.
+        if(stepList != null)
+        {
+            // gets the text object.
+            if (stepList == null)
+                stepListText = stepList.GetComponent<Text>();
+
+            // starts list
+            RefreshStepList();
+        }
+
     }
 
     // if the list is active
@@ -40,8 +66,17 @@ public class Checklist : MonoBehaviour
     // adds a step to the list of steps for the checklist.
     public void AddStep(Step newStep)
     {
+        if (newStep == null)
+            return;
+
         steps.Add(newStep);
         newStep.OnStepAddition(this);
+
+        // if there is a step list
+        if(stepListText)
+        {
+            AddStepText(newStep, steps.Count);
+        }
     }
 
     // removes a step from the list and reutrns it
@@ -169,15 +204,44 @@ public class Checklist : MonoBehaviour
     }
 
     // restarts the list
-    public void RestartQuest()
+    public void RestartChecklist()
     {
         currentStep = 0;
         // stepsCompleted = 0;
     }
 
+    // quest 
+    private void AddStepText(Step step, int stepNum)
+    {
+        // if the step list isn't null.
+        if(stepListText != null)
+            stepListText.text += "\nStep " + (stepNum) + ": " + step.title;
+    }
+
+    // refreshes the step list
+    private void RefreshStepList()
+    {
+        if (stepListText == null)
+            return;
+
+        if (title != "")
+            stepListText.text = title + ":";
+        else
+            stepListText.text = name + ":";
+
+        // adds the step text
+        for (int i = 0; i < steps.Count; i++)
+            AddStepText(steps[i], i + 1);
+    }
+
     // Update is called once per frame
     void Update()
     {
-
+        // the keycode
+        if(Input.GetKeyDown(KeyCode.H))
+        {
+            if (stepList != null)
+                stepList.SetActive(!stepList.active);
+        }
     }
 }
