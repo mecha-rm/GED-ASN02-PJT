@@ -5,16 +5,15 @@ public class Checklist : MonoBehaviour
 {
     // the steps in the checklist.
     // TODO: replace with regular List
-    public Queue<Step> stepsLeft = new Queue<Step>();
+    public List<Step> steps;
 
-    // a list of the steps that are used for the quest. This is used to show all steps.
-    private List<Step> stepList = new List<Step>();
+    public int currentStep = 0;
 
     // sets whether the checklist has been activated or not.
     public bool activeList = true;
 
     // the amount of steps that have been completed.
-    private int stepsCompleted = 0;
+    // private int stepsCompleted = 0;
 
     // destroys steps upon completing them.
     // public bool destroySteps = true;
@@ -23,8 +22,8 @@ public class Checklist : MonoBehaviour
     void Start()
     {
         // starts the first step if there are steps
-        if (activeList && stepsLeft.Count > 0)
-            stepsLeft.Peek().OnStepActivation();
+        if (activeList && steps.Count > 0)
+            steps[currentStep].OnStepActivation();
     }
 
     // if the list is active
@@ -33,84 +32,134 @@ public class Checklist : MonoBehaviour
         activeList = active;
 
         // if there are steps in the active list.
-        if (activeList && stepsLeft.Count > 0)
-            stepsLeft.Peek().OnStepActivation();
+        if (activeList && steps.Count > 0)
+            steps[currentStep].OnStepActivation();
 
     }
 
     // adds a step to the list of steps for the checklist.
     public void AddStep(Step newStep)
     {
-        stepsLeft.Enqueue(newStep);
+        steps.Add(newStep);
         newStep.OnStepAddition(this);
+    }
 
-        // adds a new step to the quest list.
-        stepList.Add(newStep);
+    // removes a step from the list and reutrns it
+    public void RemoveStep(Step step)
+    {
+        // if the step list contains the provided step
+        if(steps.Contains(step))
+        {
+            int index = steps.IndexOf(step);
+            steps.Remove(step);
+
+            // if the step removed was behind the current step, move current step one back.
+            if(index < currentStep)
+            {
+                currentStep--;
+            }
+            else if(index == currentStep) // current step was removed
+            {
+                // if the quest is now finished.
+                if (currentStep >= steps.Count)
+                    OnCompleteList();
+                else
+                    steps[currentStep].OnStepActivation();
+            }
+        }
+    }
+
+    // removes a step from the list via its index
+    public Step RemoveStep(int index)
+    {
+        if(index >= 0 && index < steps.Count)
+        {
+            Step step = steps[index];
+            steps.RemoveAt(index);
+            return step;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    // deletes a step from the list
+    public void DeleteStep(Step step)
+    {
+        RemoveStep(step);
+        Destroy(step);
+    }
+
+    // deletes a step
+    public void DeleteStep(int index)
+    {
+        Step step = RemoveStep(index);
+        Destroy(step);
     }
 
     // completes a step, which pops it off of the queue.
     public void CompleteStep()
     {
         // if there are no steps
-        if (stepsLeft.Count == 0)
+        if (steps.Count == 0)
             OnCompleteList();
 
-        Step doneStep = stepsLeft.Dequeue();
+        Step doneStep = steps[currentStep];
         doneStep.OnStepCompletion();
 
         // if the step should be destroyed.
         // if (destroySteps)
         //     Destroy(doneStep);
 
+        currentStep++;
+        // stepsCompleted++;
+
         // list is completed. 
-        if (stepsLeft.Count == 0)
+        if (currentStep >= steps.Count)
             OnCompleteList();
-
-        stepsCompleted++;
-
-        // if there are still steps remaining. 
-        if (stepsLeft.Count > 0)
-            stepsLeft.Peek().OnStepActivation();
+        else // if there are still steps remaining. 
+            steps[currentStep].OnStepActivation();
     }
 
     // gets the current step
     public Step GetCurrentStep()
     {
-        return (stepsLeft.Count == 0) ? null : stepsLeft.Peek();
+        return (steps.Count == 0 || currentStep >= steps.Count) ? null : steps[currentStep];
     }
 
     // gets the number of the current step (starting at 1).
     // the index of this step is its step number minus 1.
     public int GetCurrentStepNumber()
     {
-        return stepsCompleted + 1;
+        return currentStep + 1;
     }
 
-    // gets the remaining step amount.
+    // gets the remaining step amount. This includes the current step.
     public int GetRemainingStepCount()
     {
-        return stepsLeft.Count;
+        return steps.Count - currentStep;
     }
 
     // gets the number of completed steps
     public int GetNumberOfCompletedSteps()
     {
-        return stepsCompleted;
+        // return stepsCompleted;
+        return currentStep;
     }
-
-    // TODO: add ability to remove step
 
     // clears out all steps
     public void ClearSteps()
     {
-        stepsLeft.Clear();
-        stepList.Clear();
+        steps.Clear();
+        currentStep = 0;
+        // stepsCompleted = 0;
     }
 
     // returns 'true' if the list is complete.
     public bool IsCompleteList()
     {
-        return stepsLeft.Count == 0;
+        return currentStep >= steps.Count;
     }
 
     // called when a list is completed.
@@ -122,21 +171,8 @@ public class Checklist : MonoBehaviour
     // restarts the list
     public void RestartQuest()
     {
-        // clears out all steps
-        stepsLeft.Clear();
-        
-        // while there are steps left
-        // while(stepsLeft.Count != 0)
-        // {
-        // 
-        // }
-
-        // adds in all steps again
-        foreach(Step step in stepList)
-        {
-            stepsLeft.Enqueue(step);
-            step.OnStepAddition(this);
-        }
+        currentStep = 0;
+        // stepsCompleted = 0;
     }
 
     // Update is called once per frame

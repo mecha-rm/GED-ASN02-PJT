@@ -23,7 +23,7 @@ public abstract class Step : MonoBehaviour
     }
 
     // called when a step has been added to the list.
-    public void OnStepAddition(Checklist newList)
+    public virtual void OnStepAddition(Checklist newList)
     {
         checklist = newList;
     }
