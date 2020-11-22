@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
+// the metric
+public struct Metric
+{
+    public string name;
+    public float value;
+}
+
 public class MetricsLogger : MonoBehaviour
 {
     // the DLL
@@ -60,7 +67,7 @@ public class MetricsLogger : MonoBehaviour
     [DllImport(DLL_NAME)]
     private static extern int ExportMetrics();
 
-    
+    // Public Functions
     // adds a metric to logger
     public void AddMetricToLogger(string key, float value)
     {
@@ -164,6 +171,12 @@ public class MetricsLogger : MonoBehaviour
         // 
         // // check = (ExportMetrics() == 0) ? false : true;
         // Debug.Log("Success: " + check);
+    }
+
+    // adds a metric to the logger using a metric object
+    public void AddMetricToLogger(Metric metric)
+    {
+        AddMetric(metric.name, metric.value);
     }
 
     // Update is called once per frame
