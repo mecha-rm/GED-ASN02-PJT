@@ -65,6 +65,13 @@ public class PlayerObject : MonoBehaviour
     // public float score = 1000.0F;
     // public float scoreDecRate = 0.25F;
 
+    // TUTORIAL ONLY
+    public bool logMetrics = false;
+    public MetricsLogger logger;
+
+    Metric jumpMetric = new Metric(); // tracks the amount of jumps the player took.
+    Metric deathMetric = new Metric(); // tracks the amount of deaths from the player
+
     // Start is called before the first frame update
     void Start()
     {
@@ -115,6 +122,20 @@ public class PlayerObject : MonoBehaviour
         spawnPos = transform.position;
         spawnRot = transform.rotation;
         spawnScl = transform.localScale;
+
+        // TUTORIAL
+        if(logMetrics)
+        {
+            jumpMetric.name = "P" + playerNumber + "-JUMPS";
+            deathMetric.name = "P" + playerNumber + "-DEATHS";
+
+            // if the logger is not equal to null
+            if(logger != null)
+            {
+                logger.AddMetricToLogger(jumpMetric);
+                logger.AddMetricToLogger(deathMetric);
+            }
+        }
     }
 
     // called when the player collides with something.
@@ -256,6 +277,13 @@ public class PlayerObject : MonoBehaviour
         rigidBody.velocity = new Vector3();
         rigidBody.angularVelocity = new Vector3();
         stateMachine.SetState(0);
+
+        // if the metrics should be logged.
+        if (logMetrics)
+        {
+            deathMetric.value++;
+            logger.AddMetricToLogger(deathMetric);
+        }
     }
 
     // TODO: set spawn position
@@ -423,6 +451,9 @@ public class PlayerObject : MonoBehaviour
                 {
                     rigidBody.AddForce(Vector3.up * jumpForce * jumpMult, ForceMode.Impulse);
                     onGround = false;
+
+                    jumpMetric.value++;
+                    logger.AddMetricToLogger(jumpMetric);
                 }
             }
 

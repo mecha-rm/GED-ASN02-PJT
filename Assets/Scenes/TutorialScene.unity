@@ -1050,7 +1050,7 @@ MonoBehaviour:
   timerNumber: 2
   timer1: {fileID: 0}
   countdownStart: 0
-  timer2: {fileID: 0}
+  timer2: {fileID: 771292244}
   paused: 0
 --- !u!114 &369021183
 MonoBehaviour:
@@ -1517,6 +1517,7 @@ MonoBehaviour:
   - 'With all that out of the way, try moving around and following the steps. The
     flag is on top of the wall near the platforms. So just use said platforms to
     scale it. Hit the ''Finish'' button to close out the dialogue window. '
+  - 'New: press (H) to show/hide the step list.'
 --- !u!1 &771292236
 GameObject:
   m_ObjectHideFlags: 0
@@ -1532,6 +1533,7 @@ GameObject:
   - component: {fileID: 771292242}
   - component: {fileID: 771292237}
   - component: {fileID: 771292243}
+  - component: {fileID: 771292244}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1551,6 +1553,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e33524d9e69d5046b362adf67293848, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  logMetrics: 1
+  logger: {fileID: 771292243}
+  timer: {fileID: 771292244}
   title: Tutorial Steps
   description: Tutorial check list.
   steps: []
@@ -1655,9 +1660,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 771292236}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 936b857f455df45459c25b077566e879, type: 3}
+  m_Script: {fileID: 11500000, guid: 588489194c5055348924bac65dcb7a0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  file: Assets/Saves/metric_log.txt
+  loadFromFile: 0
+  saveToFile: 1
+--- !u!114 &771292244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771292236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dccd2b610a1771a418f80130c92f513b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  paused: 0
 --- !u!1 &794790534
 GameObject:
   m_ObjectHideFlags: 0
@@ -3881,6 +3902,8 @@ MonoBehaviour:
   defenseMult: 1
   flag: {fileID: 0}
   flagIndicator: {fileID: 1863558047}
+  logMetrics: 1
+  logger: {fileID: 771292243}
 --- !u!54 &1959659163
 Rigidbody:
   m_ObjectHideFlags: 0

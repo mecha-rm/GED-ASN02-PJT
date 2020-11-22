@@ -4,6 +4,13 @@ using UnityEngine.UI;
 
 public class Checklist : MonoBehaviour
 {
+    // used for logging metrics
+    public bool logMetrics;
+    public MetricsLogger logger;
+
+    // times the length between steps. Make sure to 
+    public StopwatchTimer timer;
+
     public string title = "";
     public string description = "";
 
@@ -155,6 +162,17 @@ public class Checklist : MonoBehaviour
             OnCompleteList();
         else // if there are still steps remaining. 
             steps[currentStep].OnStepActivation();
+
+        // lap
+        if(timer != null)
+        {
+            // splits the time
+            timer.SplitTime();
+
+            // logs the metric
+            if(logMetrics)
+                logger.AddMetricToLogger("STEP" + (currentStep), timer.GetSplitAtIndex(timer.GetSplitAmount() - 1));
+        }
     }
 
     // gets the current step
@@ -200,7 +218,8 @@ public class Checklist : MonoBehaviour
     // called when a list is completed.
     public void OnCompleteList()
     {
-
+        if (logMetrics)
+            logger.AddMetricToLogger("STEP" + (currentStep), timer.GetCurrentStopwatchTime());
     }
 
     // restarts the list
@@ -208,6 +227,10 @@ public class Checklist : MonoBehaviour
     {
         currentStep = 0;
         // stepsCompleted = 0;
+        
+        // if a timer has been set.
+        if(timer == null)
+            timer.ResetStopwatch();
     }
 
     // quest 

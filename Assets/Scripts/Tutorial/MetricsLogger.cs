@@ -12,6 +12,14 @@ public struct Metric
 
 public class MetricsLogger : MonoBehaviour
 {
+    // the file for the metrics logger. Make sure to include the file path from highest hierachy.
+    public string file = "";
+
+    // if 'true', values are loaded from a file.
+    public bool loadFromFile = false;
+    // if 'true', values are saved to a file.
+    public bool saveToFile = true;
+
     // the DLL
     private const string DLL_NAME = "GED-ASN02-DLL";
 
@@ -171,6 +179,14 @@ public class MetricsLogger : MonoBehaviour
         // 
         // // check = (ExportMetrics() == 0) ? false : true;
         // Debug.Log("Success: " + check);
+
+        // if there is a file to set.
+        if (file != "")
+            SetFile(file);
+
+        // if the contents should be loaded form the file.
+        if(loadFromFile)
+            LoadMetrics();
     }
 
     // adds a metric to the logger using a metric object
@@ -183,5 +199,16 @@ public class MetricsLogger : MonoBehaviour
     void Update()
     {
         
+    }
+
+    // when this object is destroyed.
+    private void OnDestroy()
+    {
+        // if the metrics should be saved.
+        if (saveToFile)
+        {
+            SetFile(file);
+            SaveMetrics();
+        }
     }
 }

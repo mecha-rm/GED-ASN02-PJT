@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // logs tutorial information
+// this is just to seperate the tutorial from the main content.
 public class TutorialLogger : MetricsLogger
 {
     // gets the time from the timer text
-    public TimerText time;
 
     // Start is called before the first frame update
     void Start()
@@ -19,4 +19,5 @@ public class TutorialLogger : MetricsLogger
     {
         
     }
+
 }
