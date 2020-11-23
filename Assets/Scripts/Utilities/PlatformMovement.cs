@@ -39,7 +39,7 @@ public class PlatformMovement : MonoBehaviour
 
         // adds starting position as destination.
         // doing so will also increase the index to 1 so that 
-        if(addStartPos)
+        if (addStartPos)
         {
             // adds the travel point as the first position.
             travelPoints.Insert(0, transform.position);
@@ -97,8 +97,12 @@ public class PlatformMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // if the rigidbody has not been set, it looks for the component again.
+        if (rigidBody == null)
+            rigidBody = GetComponent<Rigidbody>();
+
         // if there are travel points
-        if(!paused && travelPoints.Count != 0)
+        if (!paused && travelPoints.Count != 0)
         {
             // puts the destination index within the proper bounds
             destIndex = Mathf.Clamp(destIndex, 0, travelPoints.Count - 1);
@@ -111,7 +115,7 @@ public class PlatformMovement : MonoBehaviour
             rigidBody.AddForce(direcVec.normalized * force * Time.deltaTime, ForceMode.Acceleration);
 
             // checks to see if the current position has passed on all axes.
-            if(
+            if (
                 transform.position.x >= destination.x &&
                 transform.position.y >= destination.y &&
                 transform.position.z >= destination.z
