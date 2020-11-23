@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 // logs tutorial information
 // this is just to seperate the tutorial from the main content.
@@ -26,13 +24,13 @@ public class TutorialLogger : MetricsLogger
 
             Debug.Log("Existing Metrics (from " + loggerFile + ")");
 
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 // this function call can't be put into the debug log print directly.
                 string key = GetKeyFromLoggerAtIndex(i);
 
                 // this can be put into the debug log print, but I did it this way for consistency.
-                float val = GetValueFromLoggerAtIndex(i); 
+                float val = GetValueFromLoggerAtIndex(i);
 
                 Debug.Log(key + ": " + val);
             }
@@ -42,7 +40,7 @@ public class TutorialLogger : MetricsLogger
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
 }

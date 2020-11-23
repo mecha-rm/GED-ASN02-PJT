@@ -36,7 +36,7 @@ public class AudioClip : MonoBehaviour
                 clipEnd = audioSource.clip.length;
 
             // start at clip start instead of start of song.
-            if(playAtClipStart)
+            if (playAtClipStart)
                 audioSource.time = clipStart;
         }
     }
@@ -120,10 +120,10 @@ public class AudioClip : MonoBehaviour
 
 
         // setting value to clip start.
-        clipStart = (seconds >= 0.0F && seconds <= audioSource.clip.length) ? 
+        clipStart = (seconds >= 0.0F && seconds <= audioSource.clip.length) ?
             seconds : clipStart;
     }
-    
+
     // sets the clip start time as a percentage, with 0 being 0% and 1 being 100%.
     public void SetClipStartAsPercentage(float t)
     {
@@ -198,7 +198,7 @@ public class AudioClip : MonoBehaviour
             return;
 
         // if the audio should play at the start of the clip.
-        if(playAtClipStart)
+        if (playAtClipStart)
         {
             // if the start of the clip is greater than the current time of the clip...
             // the audioSouce is set to the start of the clip.
@@ -236,7 +236,7 @@ public class AudioClip : MonoBehaviour
         }
 
         // if the audio source is playing
-        if(audioSource.isPlaying)
+        if (audioSource.isPlaying)
         {
             // this isn't needed since using the Play() function in this class handles this.
             // puts the audio source at the clip start.
@@ -247,7 +247,7 @@ public class AudioClip : MonoBehaviour
             if (audioSource.time >= clipEnd)
             {
                 // checks to see if the audio is looping
-                switch(audioSource.loop)
+                switch (audioSource.loop)
                 {
                     case true: // audio is looping
                         audioSource.time = clipStart;

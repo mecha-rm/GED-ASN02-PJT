@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -52,7 +51,7 @@ public class SpawnerScript : MonoBehaviour
     public void Spawn()
     {
         // index number of option
-        if(entities.Count != 0 && options.value <= entities.Count)
+        if (entities.Count != 0 && options.value <= entities.Count)
         {
             GameObject newObject = Instantiate(entities[options.value]);
 
@@ -85,6 +84,6 @@ public class SpawnerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

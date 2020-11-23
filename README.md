@@ -1,7 +1,6 @@
 # GED-ASN02-PJT
 The second assignment for Game Engines. This repository contains a Unity project.
 
-
 In this README the text and instructions are all written out for convenience.
 
 - STEP 1 -
@@ -43,11 +42,18 @@ The flag is on top of the wall near the platforms. So just use said platforms to
 Hit the 'Finish' button to close out the dialogue window.
 
 
+-- PAGE 5 --
+New: press (H) to show/hide the step list.
+
 - STEP 2 -
 Name: Jumping Around
 Description: get on top of the wall using the platforms.
 
 - STEP 3 -
+Name: Crossing Platforms
+Description: Cross the platforms to reach the flag.
+
+- STEP 4 -
 Name: Flag Get
 Description: touch the flag object on top of the wall.
 

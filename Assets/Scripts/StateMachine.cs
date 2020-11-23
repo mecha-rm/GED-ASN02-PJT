@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 // the state machine class is based on a script written for assignment 1 of Game Engine Design & Implementation
@@ -22,7 +21,7 @@ public class StateMachine : MonoBehaviour
             state = 0;
 
         // sets subject for all starting observers
-        for(int i = 0; i < observers.Count; i++)
+        for (int i = 0; i < observers.Count; i++)
             observers[i].subject = this;
     }
 
@@ -95,7 +94,7 @@ public class StateMachine : MonoBehaviour
             observer.subject = this; // in case the observer doesn't have it already
             observer.OnStateChange();
         }
-            
+
     }
 
     // adds a new state. Do note that this does NOT allow for states of the same name to be added, though it is case sensitive.
@@ -146,7 +145,7 @@ public class StateMachine : MonoBehaviour
             return -1;
 
         // searches the list for the observer
-        for(int i = 0; i < observers.Count; i++)
+        for (int i = 0; i < observers.Count; i++)
         {
             if (observers[i] == observer)
                 return i;

@@ -47,7 +47,7 @@ public class Checklist : MonoBehaviour
         }
 
         // checks to see if the step list is active.
-        if(stepList != null)
+        if (stepList != null)
         {
             // gets the text object.
             if (stepList == null)
@@ -80,7 +80,7 @@ public class Checklist : MonoBehaviour
         newStep.OnStepAddition(this);
 
         // if there is a step list
-        if(stepListText)
+        if (stepListText)
         {
             AddStepText(newStep, steps.Count);
         }
@@ -90,17 +90,17 @@ public class Checklist : MonoBehaviour
     public void RemoveStep(Step step)
     {
         // if the step list contains the provided step
-        if(steps.Contains(step))
+        if (steps.Contains(step))
         {
             int index = steps.IndexOf(step);
             steps.Remove(step);
 
             // if the step removed was behind the current step, move current step one back.
-            if(index < currentStep)
+            if (index < currentStep)
             {
                 currentStep--;
             }
-            else if(index == currentStep) // current step was removed
+            else if (index == currentStep) // current step was removed
             {
                 // if the quest is now finished.
                 if (currentStep >= steps.Count)
@@ -114,7 +114,7 @@ public class Checklist : MonoBehaviour
     // removes a step from the list via its index
     public Step RemoveStep(int index)
     {
-        if(index >= 0 && index < steps.Count)
+        if (index >= 0 && index < steps.Count)
         {
             Step step = steps[index];
             steps.RemoveAt(index);
@@ -164,13 +164,13 @@ public class Checklist : MonoBehaviour
             steps[currentStep].OnStepActivation();
 
         // lap
-        if(timer != null)
+        if (timer != null)
         {
             // splits the time
             timer.SplitTime();
 
             // logs the metric
-            if(logMetrics)
+            if (logMetrics)
                 logger.AddMetricToLogger("STEP" + (currentStep), timer.GetSplitAtIndex(timer.GetSplitAmount() - 1));
         }
     }
@@ -227,9 +227,9 @@ public class Checklist : MonoBehaviour
     {
         currentStep = 0;
         // stepsCompleted = 0;
-        
+
         // if a timer has been set.
-        if(timer == null)
+        if (timer == null)
             timer.ResetStopwatch();
     }
 
@@ -237,7 +237,7 @@ public class Checklist : MonoBehaviour
     private void AddStepText(Step step, int stepNum)
     {
         // if the step list isn't null.
-        if(stepListText != null)
+        if (stepListText != null)
             stepListText.text += "\nStep " + (stepNum) + ": " + step.title;
     }
 
@@ -261,7 +261,7 @@ public class Checklist : MonoBehaviour
     void Update()
     {
         // the keycode
-        if(Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.H))
         {
             if (stepList != null)
                 stepList.SetActive(!stepList.active);

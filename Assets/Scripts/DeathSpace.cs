@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DeathSpace : MonoBehaviour
 {
@@ -17,7 +15,7 @@ public class DeathSpace : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // returns 'true' if the object is past the death plane on any axis.
@@ -26,7 +24,7 @@ public class DeathSpace : MonoBehaviour
         bool death = false;
 
         // x-axis should be used.
-        if(useX)
+        if (useX)
         {
             // checks to see if what direction is considered 'behind' the death plane.
             if (lessThanX)
@@ -39,7 +37,7 @@ public class DeathSpace : MonoBehaviour
         }
 
         // y-axis should be used.
-        if(useY)
+        if (useY)
         {
             // checks to see if what direction is considered 'behind' the death plane.
             if (lessThanY)
@@ -52,7 +50,7 @@ public class DeathSpace : MonoBehaviour
         }
 
         // z-axis should be used.
-        if(useZ)
+        if (useZ)
         {
             // checks to see if what direction is considered 'behind' the death plane.
             if (lessThanZ)
@@ -71,6 +69,6 @@ public class DeathSpace : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

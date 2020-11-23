@@ -4,9 +4,6 @@
     - https://docs.unity3d.com/ScriptReference/Transform-rotation.html
     - https://docs.unity3d.com/ScriptReference/Transform-localScale.html
  */
-using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
 
 
@@ -30,23 +27,23 @@ namespace GED
         // used for undo/redo - checks to see if anything changes.
         // the previous version of the transformation applied to the object.
         private LogEntry preTransform;
-        
+
         // start
         void Start()
         {
             // if the name is blank.
-            if(name == "")
+            if (name == "")
             {
                 string str = "";
                 const int CHAR_COUNT = 10;
 
                 // uses 10 characters for the name
-                for(int x = 0; x < 10; x++)
+                for (int x = 0; x < 10; x++)
                 {
                     // determines whether a number or letter is being used.
                     int y = Random.Range(0, 2);
 
-                    switch(y)
+                    switch (y)
                     {
                         case 0: // add number
                             str += Random.Range(0, 10);
@@ -106,7 +103,7 @@ namespace GED
         // collisions
         private void OnTriggerEnter(Collider col)
         {
-        
+
         }
 
         // when the mouse button is down
@@ -128,7 +125,7 @@ namespace GED
             // if(Input.GetKey(KeyCode.Mouse1))
             //{
             //    UnityEngine.Vector3 mousePos = Input.mousePosition;
-                
+
             //    if(camera != null)
             //    {
             //        mousePos = camera.ScreenToWorldPoint(mousePos);
@@ -137,7 +134,7 @@ namespace GED
 
             //    // mousePos = transform.TransformPoint(mousePos); // does nothing
             //    transform.position = mousePos;
-                
+
             //}
         }
 
@@ -184,7 +181,7 @@ namespace GED
         void Update()
         {
             // if something has changed.
-            if( preTransform.active != gameObject.active || 
+            if (preTransform.active != gameObject.active ||
                 preTransform.position != transform.position || preTransform.rotation != transform.rotation || preTransform.localScale != transform.localScale)
             {
                 UndoRedoSystem.RecordAction(preTransform);

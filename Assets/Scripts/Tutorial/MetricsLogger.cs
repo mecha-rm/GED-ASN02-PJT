@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using UnityEngine;
 
 // the metric
@@ -262,11 +260,11 @@ public class MetricsLogger : MonoBehaviour
         // if there is a file to set.
         if (file != "")
             SetFile(file);
-        
+
         // if the contents should be loaded form the file.
-        if(loadFromFile)
+        if (loadFromFile)
             LoadMetrics();
-    }   
+    }
 
     // adds a metric to the logger using a metric object
     public void AddMetricToLogger(Metric metric)
@@ -277,7 +275,7 @@ public class MetricsLogger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     // when this object is destroyed.

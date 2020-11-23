@@ -1803,7 +1803,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   file: Assets/Saves/metric_log.txt
-  loadFromFile: 0
+  loadFromFile: 1
   saveToFile: 1
 --- !u!114 &771292244
 MonoBehaviour:
@@ -3905,10 +3905,10 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: cbfd6c0140713074db30d7decf533be1, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.15
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
-  Mute: 1
+  Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128

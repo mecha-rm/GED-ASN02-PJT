@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Turtle : PlayerObject
+﻿public class Turtle : PlayerObject
 {
     // Start is called before the first frame update
     void Start()
@@ -16,6 +12,6 @@ public class Turtle : PlayerObject
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

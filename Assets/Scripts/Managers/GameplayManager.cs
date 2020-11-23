@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEditor;
 
 
 public class GameplayManager : MonoBehaviour
@@ -43,7 +42,7 @@ public class GameplayManager : MonoBehaviour
 
         // TODO: create players at runtime (?)
         // TODO: how will they get the models though?
-        if(p1 == null || p2 == null || p3 == null || p4 == null)
+        if (p1 == null || p2 == null || p3 == null || p4 == null)
         {
             for (int i = 1; i <= playerCount; i++)
             {
@@ -81,7 +80,7 @@ public class GameplayManager : MonoBehaviour
                 }
             }
         }
-        
+
 
         // adds players to the player list
         if (p1 != null)
@@ -94,7 +93,7 @@ public class GameplayManager : MonoBehaviour
             players.Add(p4);
 
         // adds a death space if one doesn't exist.
-        if(deathSpace == null)
+        if (deathSpace == null)
         {
             // gets the death space component.
             deathSpace = GetComponent<DeathSpace>();
@@ -113,7 +112,7 @@ public class GameplayManager : MonoBehaviour
     void Update()
     {
         // player 1 has won
-        if(p1 != null)
+        if (p1 != null)
         {
             if (p1.playerScore >= winScore)
                 SceneManager.LoadScene("EndScene");
@@ -142,7 +141,7 @@ public class GameplayManager : MonoBehaviour
 
         // goes through all players
         // TODO: maybe put this in object checks?
-        foreach(PlayerObject px in players)
+        foreach (PlayerObject px in players)
         {
             // entered death space
             if (deathSpace.InDeathSpace(px.gameObject.transform.position))
