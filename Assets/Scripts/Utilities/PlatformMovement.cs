@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 // script for moving platform
@@ -8,7 +9,7 @@ using UnityEngine;
 public class PlatformMovement : MonoBehaviour
 {
     // the rigid body of the platform. This will automatically be filled if not provided.
-    private Rigidbody rigidBody;
+    public Rigidbody rigidBody;
 
     // the force applied to move the platform.
     public float force = 1.0F;
@@ -38,7 +39,7 @@ public class PlatformMovement : MonoBehaviour
 
         // adds starting position as destination.
         // doing so will also increase the index to 1 so that 
-        if (addStartPos)
+        if(addStartPos)
         {
             // adds the travel point as the first position.
             travelPoints.Insert(0, transform.position);
@@ -114,7 +115,7 @@ public class PlatformMovement : MonoBehaviour
             rigidBody.AddForce(direcVec.normalized * force * Time.deltaTime, ForceMode.Acceleration);
 
             // checks to see if the current position has passed on all axes.
-            if (
+            if(
                 transform.position.x >= destination.x &&
                 transform.position.y >= destination.y &&
                 transform.position.z >= destination.z

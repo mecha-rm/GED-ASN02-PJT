@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 // stopwatch timer (uses DLL)
@@ -93,7 +95,7 @@ public class StopwatchTimer : MonoBehaviour
     void Update()
     {
         // if the stopwatch is not paused, update the timer.
-        if (!paused)
+        if(!paused)
             UpdateTimer(Time.deltaTime);
     }
 }

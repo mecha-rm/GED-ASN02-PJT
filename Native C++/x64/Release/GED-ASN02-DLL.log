@@ -1,0 +1,12 @@
+﻿  Wrapper.cpp
+C:\Users\roder\source\year 3 repos\GED-ASN02-DLL\MetricsLogger.h(82,48): warning C4251: 'MetricsLogger::metrics': class 'std::unordered_map<std::string,float,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,float>>>' needs to have dll-interface to be used by clients of class 'MetricsLogger'
+C:\Users\roder\source\year 3 repos\GED-ASN02-DLL\MetricsLogger.h(82): message : see declaration of 'std::unordered_map<std::string,float,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,float>>>'
+C:\Users\roder\source\year 3 repos\GED-ASN02-DLL\MetricsLogger.h(85,19): warning C4251: 'MetricsLogger::file': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'MetricsLogger'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\xstring(4648): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+     Creating library C:\Users\roder\source\year 3 repos\GED-ASN02-DLL\x64\Release\GED-ASN02-DLL.lib and object C:\Users\roder\source\year 3 repos\GED-ASN02-DLL\x64\Release\GED-ASN02-DLL.exp
+  Generating code
+  0 of 599 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    2 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  GED-ASN02-DLL.vcxproj -> C:\Users\roder\source\year 3 repos\GED-ASN02-DLL\x64\Release\GED-ASN02-DLL.dll

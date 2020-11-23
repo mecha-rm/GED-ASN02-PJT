@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class AnimationStateObserver : StateObserver
 {
@@ -9,7 +11,7 @@ public class AnimationStateObserver : StateObserver
     void Start()
     {
 
-        if (anim == null)
+        if(anim == null)
             anim = GetComponent<Animator>();
     }
 
@@ -22,6 +24,6 @@ public class AnimationStateObserver : StateObserver
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 }

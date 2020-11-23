@@ -1,6 +1,7 @@
-﻿using GED;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GED;
 
 // Command Design Pattern - Undo/Redo
 // log entry for undo/redo 
@@ -10,11 +11,11 @@ public struct LogEntry
 
     // used for tracking object creation/deletion: -1 = deletion entry, 0 = transformation data, 1 = activation entry
     // the functionality was not completed in time, and thus is not used.
-    public int type;
+    public int type; 
 
     // the object is active (i.e. visible). 
     // This does not work because invisible objects are not updated, and thus can't track the change.
-    public bool active;
+    public bool active; 
 
     // transformation variables
     public Vector3 position; // position
@@ -77,7 +78,7 @@ public class UndoRedoSystem : MonoBehaviour
         entry.rotation = rotation;
         entry.localScale = scale;
 
-
+        
         // calls other function of the same name
         RecordAction(entry);
     }
@@ -88,7 +89,7 @@ public class UndoRedoSystem : MonoBehaviour
         undoList.AddFirst(entry);
 
         // undo limit has been reached.
-        if (undoList.Count > undoLimit) // undo list has surpassed the undo limit
+        if(undoList.Count > undoLimit) // undo list has surpassed the undo limit
         {
             do
             {
@@ -119,7 +120,7 @@ public class UndoRedoSystem : MonoBehaviour
         // e1.entity = e0.entity; // gets the first entry again (this doesn't mean anything)
 
         // if the entity has been deleted.
-        if (e0.entity == null)
+        if(e0.entity == null)
         {
             undoList.RemoveFirst();
             UndoAction(); // calls the function again to deal with the redo operation
@@ -229,13 +230,13 @@ public class UndoRedoSystem : MonoBehaviour
     {
         // CTRL + Z undo shortcut and CTRL + Y redo shortcut
         // if the left or right control keys are pressed.
-        if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)))
+        if((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)))
         {
-            if (Input.GetKeyDown(KeyCode.Z)) // undo
+            if(Input.GetKeyDown(KeyCode.Z)) // undo
             {
                 UndoAction();
             }
-            else if (Input.GetKeyDown(KeyCode.Y)) // redo
+            else if(Input.GetKeyDown(KeyCode.Y)) // redo
             {
                 RedoAction();
             }

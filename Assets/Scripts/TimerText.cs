@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class TimerText : MonoBehaviour
@@ -24,7 +26,7 @@ public class TimerText : MonoBehaviour
     void Start()
     {
         // initializes timers if they don't exist.
-        if (text == null)
+        if(text == null)
         {
             // if no text object has been set, it gets the text component.
             text = GetComponent<Text>();

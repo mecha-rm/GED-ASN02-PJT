@@ -1,4 +1,7 @@
 ﻿// class for the player
+using System.Collections;
+using System.Collections.Generic;
+using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -62,13 +65,6 @@ public class PlayerObject : MonoBehaviour
     // public float score = 1000.0F;
     // public float scoreDecRate = 0.25F;
 
-    // TUTORIAL ONLY
-    public bool logMetrics = false;
-    public MetricsLogger logger;
-
-    Metric jumpMetric = new Metric(); // tracks the amount of jumps the player took.
-    Metric deathMetric = new Metric(); // tracks the amount of deaths from the player
-
     // Start is called before the first frame update
     void Start()
     {
@@ -95,7 +91,7 @@ public class PlayerObject : MonoBehaviour
         // }
 
         // if no player camera has been set, a new one will be created.
-        if (playerCamera == null)
+        if(playerCamera == null)
         {
             // creates an empty player object and gives it a camera.
             GameObject camObject = new GameObject("Player " + playerNumber + " Camera");
@@ -109,7 +105,7 @@ public class PlayerObject : MonoBehaviour
             playerCamera.useParentRotation = true;
 
         }
-        else if (playerCamera.target != gameObject)
+        else if(playerCamera.target != gameObject)
         {
             playerCamera.target = gameObject;
             playerCamera.distance = cameraDistance;
@@ -119,20 +115,6 @@ public class PlayerObject : MonoBehaviour
         spawnPos = transform.position;
         spawnRot = transform.rotation;
         spawnScl = transform.localScale;
-
-        // TUTORIAL
-        if (logMetrics)
-        {
-            jumpMetric.name = "P" + playerNumber + "-JUMPS";
-            deathMetric.name = "P" + playerNumber + "-DEATHS";
-
-            // if the logger is not equal to null
-            if (logger != null)
-            {
-                logger.AddMetricToLogger(jumpMetric);
-                logger.AddMetricToLogger(deathMetric);
-            }
-        }
     }
 
     // called when the player collides with something.
@@ -146,7 +128,7 @@ public class PlayerObject : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     {
         // the collision
-        if (!onGround)
+        if(!onGround)
         {
             for (int i = 0; i < collision.contactCount; i++)
             {
@@ -163,7 +145,7 @@ public class PlayerObject : MonoBehaviour
                 }
             }
         }
-
+        
 
     }
 
@@ -274,13 +256,6 @@ public class PlayerObject : MonoBehaviour
         rigidBody.velocity = new Vector3();
         rigidBody.angularVelocity = new Vector3();
         stateMachine.SetState(0);
-
-        // if the metrics should be logged.
-        if (logMetrics)
-        {
-            deathMetric.value++;
-            logger.AddMetricToLogger(deathMetric);
-        }
     }
 
     // TODO: set spawn position
@@ -298,7 +273,7 @@ public class PlayerObject : MonoBehaviour
         {
             // TODO: factor in deltaTime for movement
             // TODO: lerp camera for rotation
-
+            
             // Movement
             {
                 // forward and backward movement
@@ -322,7 +297,7 @@ public class PlayerObject : MonoBehaviour
                 if (Input.GetKey(KeyCode.A)) // turn left
                 {
                     // if there is no velocity, set the player's rotation to -90 degrees.
-                    if (Input.GetKey(KeyCode.W)) // if the player is going foward
+                    if(Input.GetKey(KeyCode.W)) // if the player is going foward
                     {
                         Vector3 force = -transform.right * movementSpeed * speedMult * Time.deltaTime;
                         rigidBody.AddForce(force);
@@ -343,7 +318,7 @@ public class PlayerObject : MonoBehaviour
                         Vector3 force = transform.right * movementSpeed * speedMult * Time.deltaTime;
                         rigidBody.AddForce(force);
                         direcVec += force;
-
+                        
                         transform.Rotate(Vector3.up, rotSpeed.y * Time.deltaTime);
                     }
                     else // the player is not pushing themself forward, so rotate instead.
@@ -373,12 +348,12 @@ public class PlayerObject : MonoBehaviour
             // Hard Rotation (Snap)
             {
                 // rotate to the left (slow)
-                if (Input.GetKey(KeyCode.LeftArrow))
+                if(Input.GetKey(KeyCode.LeftArrow))
                 {
                     transform.Rotate(Vector3.up, -rotSpeed.y * Time.deltaTime);
                 }
                 // rotate to the right
-                else if (Input.GetKey(KeyCode.RightArrow))
+                else if(Input.GetKey(KeyCode.RightArrow))
                 {
                     transform.Rotate(Vector3.up, +rotSpeed.y * Time.deltaTime);
                 }
@@ -433,7 +408,7 @@ public class PlayerObject : MonoBehaviour
                 // }
 
                 // turn backwards
-                if (Input.GetKeyDown(KeyCode.DownArrow))
+                if(Input.GetKeyDown(KeyCode.DownArrow))
                 {
                     transform.Rotate(Vector3.up, 180.0F);
                 }
@@ -444,13 +419,10 @@ public class PlayerObject : MonoBehaviour
 
                 // if the player is on the on the gound, and can jump.
                 // jump does NOT rely on delta time for consistency sake
-                if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space)) && onGround)
+                if((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space)) && onGround)
                 {
                     rigidBody.AddForce(Vector3.up * jumpForce * jumpMult, ForceMode.Impulse);
                     onGround = false;
-
-                    jumpMetric.value++;
-                    logger.AddMetricToLogger(jumpMetric);
                 }
             }
 
@@ -531,20 +503,20 @@ public class PlayerObject : MonoBehaviour
         // }
 
         // if the camera distance has changed.
-        if (cameraDistance != playerCamera.distance)
+        if(cameraDistance != playerCamera.distance)
         {
             playerCamera.distance = cameraDistance;
         }
 
         // TODO: take this out or make it more efficient.
         // player isn't moving
-        if (stateMachine.state != 0 && rigidBody.velocity == new Vector3())
+        if(stateMachine.state != 0 && rigidBody.velocity == new Vector3())
         {
             stateMachine.SetState(0);
         }
 
         // if the player has a flag, gain a point.
-        if (flag != null)
+        if(flag != null)
         {
             playerScore += Time.deltaTime;
             playerScoreText.text = "Player Score: " + Mathf.Floor(playerScore); // "Player Score: " +

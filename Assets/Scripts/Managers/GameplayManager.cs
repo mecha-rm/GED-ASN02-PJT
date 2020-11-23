@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using UnityEditor;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -38,49 +38,44 @@ public class GameplayManager : MonoBehaviour
         if (objectiveText != null)
             objectiveText.text = "First player to " + winScore + " wins";
 
-        string playerPrefabPath = "Assets/Prefabs/Player.prefab";
+        // now loads from resources folder so that an EXE can be built.
+        Object playerPrefab = Resources.Load<Object>("Prefabs/Player"); // Assets/Resources/Prefabs/Player.prefab
 
-        // TODO: create players at runtime (?)
-        // TODO: how will they get the models though?
+        // creates players at runtime
         if (p1 == null || p2 == null || p3 == null || p4 == null)
         {
             for (int i = 1; i <= playerCount; i++)
             {
-                GameObject px = null;
+                GameObject px = Instantiate((GameObject)playerPrefab);
 
-                // generates player
+                // generates players
                 if (i == 1 && p1 == null)
                 {
-                    px = (GameObject)AssetDatabase.LoadAssetAtPath(playerPrefabPath, typeof(Object));
                     p1 = px.GetComponent<PlayerObject>();
                     p1.playerNumber = 1;
                     p1.playerCamera.gameObject.GetComponent<Camera>().targetDisplay = 1;
-
                 }
                 else if (i == 2 && p2 == null)
                 {
-                    px = (GameObject)AssetDatabase.LoadAssetAtPath(playerPrefabPath, typeof(Object));
                     p2 = px.GetComponent<PlayerObject>();
                     p2.playerNumber = 2;
                     p2.playerCamera.gameObject.GetComponent<Camera>().targetDisplay = 2;
                 }
                 else if (i == 3 && p3 == null)
                 {
-                    px = (GameObject)AssetDatabase.LoadAssetAtPath(playerPrefabPath, typeof(Object));
                     p3 = px.GetComponent<PlayerObject>();
                     p3.playerNumber = 3;
                     p3.playerCamera.gameObject.GetComponent<Camera>().targetDisplay = 3;
                 }
                 else if (i == 4 && p4 == null)
                 {
-                    px = (GameObject)AssetDatabase.LoadAssetAtPath(playerPrefabPath, typeof(Object));
                     p4 = px.GetComponent<PlayerObject>();
                     p4.playerNumber = 4;
                     p4.playerCamera.gameObject.GetComponent<Camera>().targetDisplay = 4;
                 }
             }
         }
-
+        
 
         // adds players to the player list
         if (p1 != null)
@@ -93,7 +88,7 @@ public class GameplayManager : MonoBehaviour
             players.Add(p4);
 
         // adds a death space if one doesn't exist.
-        if (deathSpace == null)
+        if(deathSpace == null)
         {
             // gets the death space component.
             deathSpace = GetComponent<DeathSpace>();
@@ -112,7 +107,7 @@ public class GameplayManager : MonoBehaviour
     void Update()
     {
         // player 1 has won
-        if (p1 != null)
+        if(p1 != null)
         {
             if (p1.playerScore >= winScore)
                 SceneManager.LoadScene("EndScene");
@@ -141,7 +136,7 @@ public class GameplayManager : MonoBehaviour
 
         // goes through all players
         // TODO: maybe put this in object checks?
-        foreach (PlayerObject px in players)
+        foreach(PlayerObject px in players)
         {
             // entered death space
             if (deathSpace.InDeathSpace(px.gameObject.transform.position))
