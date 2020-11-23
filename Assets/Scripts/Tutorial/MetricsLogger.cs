@@ -63,6 +63,21 @@ public class MetricsLogger : MonoBehaviour
     [DllImport(DLL_NAME)]
     private static extern void Clear();
 
+    // NOTE: filling the array with the names didn't work out, but the float version did.
+    // as such, the names are instead grabbed one at a time. This has been commented out of the DLL as well.
+
+    // returns and returns an array of list keys.
+    // this is not saved
+    // [DllImport(DLL_NAME, EntryPoint = "GenerateKeyArray")]
+    // private static extern void GenerateKeyArray([MarshalAs(UnmanagedType.LPStr)] string[] arr, int size);
+    // [DllImport(DLL_NAME, EntryPoint = "GenerateKeyArray")]
+    // private static extern void GenerateKeyArray([MarshalAs(UnmanagedType.LPStr)] char[,] arr, int size);
+
+    // generates an array of values in the list.
+    // this is not saved
+    [DllImport(DLL_NAME, EntryPoint = "GenerateValueArray")]
+    private static extern void GenerateValueArray(float[] arr, int size);
+
     // sets the file
     [DllImport(DLL_NAME)]
     private static extern void SetFile([MarshalAs(UnmanagedType.LPStr)] string key);
@@ -108,6 +123,18 @@ public class MetricsLogger : MonoBehaviour
         return GetMetric(key);
     }
 
+    // gets a string from the logger at the provided index
+    public string GetKeyFromLoggerAtIndex(int index)
+    {
+        return Marshal.PtrToStringAnsi(GetKeyAtIndex(index));
+    }
+
+    // gets value at index
+    public float GetValueFromLoggerAtIndex(int index)
+    {
+        return GetValueAtIndex(index);
+    }
+
     // gets the number of metrics
     public int GetNumberOfMetrics()
     {
@@ -124,6 +151,29 @@ public class MetricsLogger : MonoBehaviour
     public void ClearLogger()
     {
         Clear();
+    }
+
+    // gets array with key values
+    // taken out because it didn't work.
+    // public string[] GetLoggerKeyArray()
+    // {
+    //     int count = GetMetricCount();
+    //     string[] arrStr = new string[count];
+    //     char[,] arrChs = new char[count, 0];
+    // 
+    //     GenerateKeyArray(arrChs, count);
+    // 
+    //     return arrStr;
+    // }
+
+    // gets array with float values
+    public float[] GetLoggerValueArray()
+    {
+        int count = GetMetricCount();
+        float[] arr = new float[count];
+
+        GenerateValueArray(arr, count);
+        return arr;
     }
 
     // sets the file
@@ -159,6 +209,7 @@ public class MetricsLogger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Test Code
         // string file = "Assets/Saves/test.txt";
         // 
         // SetFile(file);
@@ -187,15 +238,35 @@ public class MetricsLogger : MonoBehaviour
         // 
         // // check = (ExportMetrics() == 0) ? false : true;
         // Debug.Log("Success: " + check);
+        // 
+        // {
+        //     Debug.Log("Getting Values from Array");
+        // 
+        //     // Value at Index 0
+        //     int idx = 0;
+        //     Debug.Log("Value at Index " + idx + GetKeyFromLoggerAtIndex(idx) + " : " + GetValueFromLoggerAtIndex(idx));
+        // 
+        //     // int amnt = GetMetricCount();
+        //     // // string[] arrStr = GetLoggerKeyArray();
+        //     // float[] arrFlt = GetLoggerValueArray();
+        //     // 
+        //     // for(int i = 0; i < amnt; i++)
+        //     // {
+        //     //     // Debug.Log(arrStr[i] + " : " + arrFlt[i]);
+        //     //     Debug.Log(arrFlt[i]);
+        //     // }
+        // 
+        // }
+
 
         // if there is a file to set.
         if (file != "")
             SetFile(file);
-
+        
         // if the contents should be loaded form the file.
         if(loadFromFile)
             LoadMetrics();
-    }
+    }   
 
     // adds a metric to the logger using a metric object
     public void AddMetricToLogger(Metric metric)
