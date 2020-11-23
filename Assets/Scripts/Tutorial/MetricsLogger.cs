@@ -43,6 +43,14 @@ public class MetricsLogger : MonoBehaviour
     [DllImport(DLL_NAME)]
     private static extern float GetMetric([MarshalAs(UnmanagedType.LPStr)] string key);
 
+    // returns key at provided index
+    [DllImport(DLL_NAME, EntryPoint = "GetKeyAtIndex")]
+    private static extern System.IntPtr GetKeyAtIndex(int index);
+
+    // returns the metric at the provided index.
+    [DllImport(DLL_NAME)]
+    private static extern float GetValueAtIndex(int index);
+
     // metric count
     [DllImport(DLL_NAME)]
     private static extern int GetMetricCount();
