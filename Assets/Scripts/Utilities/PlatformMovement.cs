@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 // script for moving platform
 // if you don't want the platform to tilt, then freeze the rotation.
 // if you don't want the platform to sink, increase its mass so that objects can't weigh it down.
@@ -27,6 +28,15 @@ public class PlatformMovement : MonoBehaviour
     // if 'true', the platform stops moving.
     public bool paused = false;
 
+    // TUTORIAL EX
+    // if 'useProcessZone' is true, then the platforms reset and don't process if not within the process zone.
+    public ProcessZone processZone = null;
+    public bool useProcessZone = false;
+    
+    // no other transformation information is included since this only does movement.
+    private Vector3 resetPos = new Vector3(); // reset position
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +54,9 @@ public class PlatformMovement : MonoBehaviour
             // adds the travel point as the first position.
             travelPoints.Insert(0, transform.position);
         }
+
+        // saves the starting position as the reset position
+        resetPos = transform.position;
     }
 
     // adds a travel point
@@ -97,36 +110,63 @@ public class PlatformMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // if in the zone
+        bool inZone = true;
+
         // if the rigidbody has not been set, it looks for the component again.
         if (rigidBody == null)
             rigidBody = GetComponent<Rigidbody>();
 
-        // if there are travel points
-        if (!paused && travelPoints.Count != 0)
+        // process zone is not null
+        if(processZone != null && useProcessZone)
         {
-            // puts the destination index within the proper bounds
-            destIndex = Mathf.Clamp(destIndex, 0, travelPoints.Count - 1);
+            // check to see if in zone
+            inZone = processZone.InZone(transform.position);
 
-            // travel point, and direction vector, normalized
-            Vector3 destination = travelPoints[destIndex];
-            Vector3 direcVec = destination - transform.position;
+            // since these are moving platforms, the starting position is checked as well.
+            // this prevents the platform from resetting if it moves out of the zone... 
+            // even though its starting position is still in the zone.
+            if (!inZone)
+                inZone = processZone.InZone(resetPos);
 
-            // adds force to the rigid body
-            rigidBody.AddForce(direcVec.normalized * force * Time.deltaTime, ForceMode.Acceleration);
-
-            // checks to see if the current position has passed on all axes.
-            if(
-                transform.position.x >= destination.x &&
-                transform.position.y >= destination.y &&
-                transform.position.z >= destination.z
-            )
-            {
-                // goes onto the next destination
-                // if this goes out of bounds, it will be corrected on the next update.
-                destIndex++;
-            }
-
+            // if the starting position
 
         }
+
+        if(inZone) // in the zone
+        {
+            // if there are travel points
+            if (!paused && travelPoints.Count != 0)
+            {
+                // puts the destination index within the proper bounds
+                destIndex = Mathf.Clamp(destIndex, 0, travelPoints.Count - 1);
+
+                // travel point, and direction vector, normalized
+                Vector3 destination = travelPoints[destIndex];
+                Vector3 direcVec = destination - transform.position;
+
+                // adds force to the rigid body
+                rigidBody.AddForce(direcVec.normalized * force * Time.deltaTime, ForceMode.Acceleration);
+
+                // checks to see if the current position has passed on all axes.
+                if (
+                    transform.position.x >= destination.x &&
+                    transform.position.y >= destination.y &&
+                    transform.position.z >= destination.z
+                )
+                {
+                    // goes onto the next destination
+                    // if this goes out of bounds, it will be corrected on the next update.
+                    destIndex++;
+                }
+            }
+        }
+        else if(!inZone && !paused) // not in zone, and platform isn't paused
+        {
+            transform.position = resetPos;
+            destIndex = 0;
+        }
+
+
     }
 }

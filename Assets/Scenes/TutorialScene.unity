@@ -776,6 +776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23a48695a779c0a49ba1eea4ca4e8afd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidBody: {fileID: 0}
   force: 50
   travelPoints:
   - {x: -30, y: 20, z: -80}
@@ -783,6 +784,8 @@ MonoBehaviour:
   destIndex: 0
   addStartPos: 0
   paused: 0
+  processZone: {fileID: 1959659165}
+  useProcessZone: 1
 --- !u!65 &208410830
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3439,6 +3442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23a48695a779c0a49ba1eea4ca4e8afd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidBody: {fileID: 0}
   force: 50
   travelPoints:
   - {x: -30, y: 20, z: -125}
@@ -3446,6 +3450,8 @@ MonoBehaviour:
   destIndex: 0
   addStartPos: 0
   paused: 0
+  processZone: {fileID: 1959659165}
+  useProcessZone: 1
 --- !u!65 &1560550526
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4359,6 +4365,7 @@ GameObject:
   - component: {fileID: 1959659163}
   - component: {fileID: 1959659162}
   - component: {fileID: 1959659161}
+  - component: {fileID: 1959659165}
   m_Layer: 0
   m_Name: Player Object
   m_TagString: Untagged
@@ -4416,8 +4423,6 @@ MonoBehaviour:
   defenseMult: 1
   flag: {fileID: 0}
   flagIndicator: {fileID: 1863558047}
-  logMetrics: 1
-  logger: {fileID: 771292243}
 --- !u!54 &1959659163
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4451,6 +4456,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1959659165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1959659160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f71407e25ac6342459b6799fe5b07bb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centre: {fileID: 1959659160}
+  radius: 1000
 --- !u!1 &1986703152
 GameObject:
   m_ObjectHideFlags: 0
@@ -4940,6 +4959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23a48695a779c0a49ba1eea4ca4e8afd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidBody: {fileID: 0}
   force: 50
   travelPoints:
   - {x: -30, y: 20, z: -105}
@@ -4947,6 +4967,8 @@ MonoBehaviour:
   destIndex: 0
   addStartPos: 0
   paused: 0
+  processZone: {fileID: 1959659165}
+  useProcessZone: 1
 --- !u!65 &2133586357
 BoxCollider:
   m_ObjectHideFlags: 0
