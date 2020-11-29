@@ -20,7 +20,8 @@ public class StepObserver : StateObserver
     // for the step observer, it is called when the step is completed.
     public override void OnStateChange()
     {
-        Checklist cl = step.GetChecklist();
+        // Checklist cl = step.GetChecklist();
+        Checklist cl = step.checklist;
 
         // if the current step is set to the observer, then the step is complete.
         if (subject.GetStateNumber() == stepEndState && cl.GetCurrentStep() == step)

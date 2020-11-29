@@ -4,7 +4,7 @@
 public abstract class Step : MonoBehaviour
 {
     // the checklist
-    protected Checklist checklist = null;
+    public Checklist checklist = null; // originally protected
 
     // the number of the step in the list. Step numbers start at 1.
     public string title = "";

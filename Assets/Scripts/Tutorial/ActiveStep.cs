@@ -63,7 +63,7 @@ public class ActiveStep : Step
     void Update()
     {
         // trigger
-        if (subject.active == watchForActive && checklist.GetCurrentStep() == this)
+        if (subject.activeSelf == watchForActive && checklist.GetCurrentStep() == this)
         {
             checklist.CompleteStep();
         }

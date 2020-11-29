@@ -73,8 +73,8 @@ public class Checklist : MonoBehaviour
     // adds a step to the list of steps for the checklist.
     public void AddStep(Step newStep)
     {
-        if (newStep == null)
-            return;
+        // if (newStep == null)
+        //     return;
 
         steps.Add(newStep);
         newStep.OnStepAddition(this);
@@ -264,7 +264,7 @@ public class Checklist : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H))
         {
             if (stepList != null)
-                stepList.SetActive(!stepList.active);
+                stepList.SetActive(!stepList.activeSelf);
         }
     }
 }

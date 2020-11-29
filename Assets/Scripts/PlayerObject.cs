@@ -33,8 +33,8 @@ public class PlayerObject : MonoBehaviour
     public FollowerCamera playerCamera; // the player's camera (TODO: generate a dedicated camera for the player)
     public Vector3 cameraDistance = new Vector3(0, 3, -7); // the offset for the camera that's attached to the player.
 
-    private Vector3 direcVec; // the vector direction
-    private Vector3 lastPos; // the player's previous position
+    // private Vector3 direcVec; // the vector direction
+    // private Vector3 lastPos; // the player's previous position
 
     // TODO: TEMPORARY (?)
     // TODO: the gameplay manager or death space should look at the player objects and see if they're dead.
@@ -47,7 +47,7 @@ public class PlayerObject : MonoBehaviour
     // // saves the rotation of the camera
     // private Vector3 camRot = new Vector3(0.0F, 0.0F, 0.0F);
     private Vector3 rotSpeed = new Vector3(150.0F, 150.0F, 150.0F);
-    private Vector2 xRotLimit = new Vector2(-50.0F, 50.0F);
+    // private Vector2 xRotLimit = new Vector2(-50.0F, 50.0F);
     private float maxVelocity = 50.0F;
 
     // animal characteristics
@@ -281,7 +281,7 @@ public class PlayerObject : MonoBehaviour
                 {
                     Vector3 force = transform.forward * movementSpeed * speedMult * Time.deltaTime;
                     rigidBody.AddForce(force, ForceMode.Force);
-                    direcVec += force;
+                    // direcVec += force;
                     stateMachine.SetState(1);
 
                 }
@@ -289,7 +289,7 @@ public class PlayerObject : MonoBehaviour
                 {
                     Vector3 force = -transform.forward * movementSpeed * backupFactor * speedMult * Time.deltaTime;
                     rigidBody.AddForce(force);
-                    direcVec += force;
+                    // direcVec += force;
 
                 }
 
@@ -301,7 +301,7 @@ public class PlayerObject : MonoBehaviour
                     {
                         Vector3 force = -transform.right * movementSpeed * speedMult * Time.deltaTime;
                         rigidBody.AddForce(force);
-                        direcVec += force;
+                        // direcVec += force;
 
                         transform.Rotate(Vector3.up, -rotSpeed.y * Time.deltaTime);
                     }
@@ -317,7 +317,7 @@ public class PlayerObject : MonoBehaviour
                     {
                         Vector3 force = transform.right * movementSpeed * speedMult * Time.deltaTime;
                         rigidBody.AddForce(force);
-                        direcVec += force;
+                        // direcVec += force;
                         
                         transform.Rotate(Vector3.up, rotSpeed.y * Time.deltaTime);
                     }
@@ -444,13 +444,13 @@ public class PlayerObject : MonoBehaviour
             {
                 Vector3 shift = new Vector3(0, 0, movementSpeed * speedMult * Time.deltaTime);
                 transform.Translate(shift);
-                direcVec += shift;
+                // direcVec += shift;
             }
             else if (Input.GetKey(KeyCode.S))
             {
                 Vector3 shift = new Vector3(0, 0, -movementSpeed * speedMult * Time.deltaTime);
                 transform.Translate(shift);
-                direcVec += shift;
+                // direcVec += shift;
             }
 
             // leftward and rightward movement
@@ -458,13 +458,13 @@ public class PlayerObject : MonoBehaviour
             {
                 Vector3 shift = new Vector3(-movementSpeed * speedMult * Time.deltaTime, 0, 0);
                 transform.Translate(shift);
-                direcVec += shift;
+                // direcVec += shift;
             }
             else if (Input.GetKey(KeyCode.D))
             {
                 Vector3 shift = new Vector3(movementSpeed * speedMult * Time.deltaTime, 0, 0);
                 transform.Translate(shift);
-                direcVec += shift;
+                // direcVec += shift;
             }
 
             // upward and downward movement
@@ -472,13 +472,13 @@ public class PlayerObject : MonoBehaviour
             {
                 Vector3 shift = new Vector3(0, movementSpeed * speedMult * Time.deltaTime, 0);
                 transform.Translate(shift);
-                direcVec += shift;
+                // direcVec += shift;
             }
             else if (Input.GetKey(KeyCode.E))
             {
                 Vector3 shift = new Vector3(0, -movementSpeed * speedMult * Time.deltaTime, 0);
                 transform.Translate(shift);
-                direcVec += shift;
+                // direcVec += shift;
             }
 
         }
@@ -523,6 +523,6 @@ public class PlayerObject : MonoBehaviour
         }
 
         // saves the player's current position
-        lastPos = transform.position;
+        // lastPos = transform.position;
     }
 }
