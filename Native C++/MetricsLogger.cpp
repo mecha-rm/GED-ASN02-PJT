@@ -166,7 +166,7 @@ float MetricsLogger::GetMetric(std::string key)
 }
 
 // gets the key at the index
-std::string MetricsLogger::GetKeyAtIndex(int index)
+const std::string& MetricsLogger::GetKeyAtIndex(int index)
 {
 	// if the index is out of bounds
 	if (index < 0 || index >= metrics.size())
@@ -266,7 +266,7 @@ void MetricsLogger::SetFile(std::string file)
 }
 
 // returns the file
-std::string MetricsLogger::GetFile() const
+const std::string& MetricsLogger::GetFile() const
 {
 	return file;
 }
@@ -348,7 +348,7 @@ bool MetricsLogger::ImportMetrics(std::string file)
 	// sees if the import was successful
 	bool success = ImportMetrics();
 
-	// if the importwas a failure, don't ave the file name.
+	// if the import was a failure, don't ave the file name.
 	if (!success)
 		this->file = origFile;
 

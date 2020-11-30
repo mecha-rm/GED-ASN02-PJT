@@ -1,5 +1,6 @@
 # GED-ASN02-PJT
 The second assignment for Game Engines. This repository contains a Unity project.
+A repository for the DLL can be found here: https://github.com/mecha-rm/GED-ASN02-DLL/.
 
 In this README the text and instructions are all written out for convenience.
 

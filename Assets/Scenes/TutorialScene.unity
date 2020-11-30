@@ -2532,6 +2532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7db18c5bbf108a445b22f11f99ebb2f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checklist: {fileID: 0}
   title: Crossing Platforms
   description: Cross the platforms to reach the flag.
   objects: []
@@ -2962,6 +2963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7db18c5bbf108a445b22f11f99ebb2f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checklist: {fileID: 0}
   title: Moving Around
   description: Jump on top of the lowest platform.
   objects:
@@ -3519,6 +3521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25868a1258ab737438d261f850abbbe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checklist: {fileID: 0}
   title: Flag Get
   description: Obtain the flag
   subject: {fileID: 1860081075}
@@ -3958,6 +3961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7db18c5bbf108a445b22f11f99ebb2f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checklist: {fileID: 0}
   title: Jumping Around
   description: Get on top of the wall using the platforms.
   objects: []

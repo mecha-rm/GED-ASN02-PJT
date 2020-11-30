@@ -29,7 +29,7 @@ public:
 	float GetMetric(std::string key);
 
 	// returns key at provided index
-	std::string GetKeyAtIndex(int index);
+	const std::string& GetKeyAtIndex(int index);
 
 	// returns the metric at the provided index.
 	float GetValueAtIndex(int index);
@@ -55,7 +55,7 @@ public:
 	void SetFile(std::string file);
 
 	// gets the file name, which includes its path.
-	std::string GetFile() const;
+	const std::string& GetFile() const;
 
 	// returns the length of the file name
 	int GetFileNameLength() const;
